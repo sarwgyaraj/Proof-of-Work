@@ -30,20 +30,17 @@ export default function Navbar() {
     navLinks = [
       { id: 'admin-dashboard', label: 'Admin Hub', icon: LayoutDashboard },
       { id: 'talent', label: 'Candidates', icon: Users },
-      { id: 'hackathons', label: 'Hackathons', icon: Compass },
-      { id: 'challenges', label: 'Challenges', icon: Trophy }
+      { id: 'hackathons', label: 'Hackathons', icon: Compass }
     ];
   } else if (userRole === 'employer') {
     navLinks = [
       { id: 'employer-dashboard', label: 'Talent Pipeline', icon: Users },
       { id: 'talent', label: 'Talent Directory', icon: Users },
-      { id: 'challenges', label: 'Skill Bounties', icon: Trophy },
       { id: 'hackathons', label: 'Hackathons', icon: Compass }
     ];
   } else {
     navLinks = [
       { id: 'hackathons', label: 'Hackathons', icon: Compass },
-      { id: 'challenges', label: 'Skill Challenges', icon: Trophy },
       { id: 'submit-project', label: 'Submit Proof', icon: UploadCloud }
     ];
   }
@@ -149,7 +146,15 @@ export default function Navbar() {
                 )}
 
                 <button
-                  onClick={() => navigateTo('profile', currentUser.role === 'candidate' ? currentUser.id : 'cand-001')}
+                  onClick={() => {
+                    if (currentUser.role === 'employer') {
+                      navigateTo('employer-profile');
+                    } else if (currentUser.role === 'admin') {
+                      navigateTo('admin-dashboard');
+                    } else {
+                      navigateTo('profile', currentUser.id);
+                    }
+                  }}
                   className="flex items-center gap-2 px-3 py-1.5 text-xs font-medium text-slate-300 hover:text-white hover:bg-slate-800/60 rounded-lg transition-colors"
                 >
                   <Avatar

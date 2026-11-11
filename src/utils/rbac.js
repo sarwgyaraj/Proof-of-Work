@@ -130,6 +130,11 @@ export const ROUTE_ACCESS = {
     allowedRoles: [ROLES.CANDIDATE, ROLES.EMPLOYER, ROLES.ADMIN],
     fallbackRoute: 'login'
   },
+  'employer-profile': {
+    requiredPermission: PERMISSIONS.ACCESS_EMPLOYER_DASHBOARD,
+    allowedRoles: [ROLES.EMPLOYER, ROLES.ADMIN],
+    fallbackRoute: 'login'
+  },
   'hackathons': {
     requiredPermission: PERMISSIONS.DISCOVER_HACKATHONS,
     allowedRoles: [ROLES.CANDIDATE, ROLES.EMPLOYER, ROLES.ADMIN],

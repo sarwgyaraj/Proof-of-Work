@@ -225,8 +225,12 @@ export function AppProvider({ children }) {
 
   // Actions
   const navigateTo = (view, profileId = null) => {
-    if (profileId) {
+    // If navigating to profile with a specific profileId, update viewedProfileId
+    if (view === 'profile' && profileId) {
       setViewedProfileId(profileId);
+    } else if (view === 'profile' && !profileId) {
+      // Default to candidate's own profile if candidate, or cand-001
+      setViewedProfileId(currentUser?.id || 'cand-001');
     }
 
     // Role-Based Route Access Enforcement Guard
@@ -250,6 +254,7 @@ export function AppProvider({ children }) {
   };
 
   const loginWithCredentials = (inputEmail, inputPassword, signupRole = null) => {
+    setInterviewCandidate(null);
     const cleanEmail = inputEmail.trim().toLowerCase();
     
     if (cleanEmail === 'admin@proofwork.demo' || cleanEmail.includes('admin')) {
@@ -275,25 +280,32 @@ export function AppProvider({ children }) {
   };
 
   const loginAs = (role) => {
+    // Dismiss any open interview or candidate action modals during persona switch
+    setInterviewCandidate(null);
+
     if (role === 'admin') {
       setCurrentUser(INITIAL_ADMIN);
       setActiveRole('admin');
+      setViewedProfileId('cand-001');
       navigateTo('admin-dashboard');
       showToast('Signed in as Platform Administrator');
     } else if (role === 'employer') {
       setCurrentUser(INITIAL_EMPLOYER);
       setActiveRole('employer');
+      setViewedProfileId('cand-001');
       navigateTo('employer-dashboard');
       showToast('Signed in as Pooja Kulkarni (Nexora Technologies - Bengaluru)');
     } else {
       setCurrentUser(INITIAL_USER);
       setActiveRole('candidate');
+      setViewedProfileId(INITIAL_USER.id);
       navigateTo('candidate-dashboard');
       showToast('Signed in as Rohan Sharma (IIT Bombay - Candidate Demo)');
     }
   };
 
   const logout = () => {
+    setInterviewCandidate(null);
     setCurrentUser(null);
     navigateTo('landing');
     showToast('Signed out successfully', 'info');

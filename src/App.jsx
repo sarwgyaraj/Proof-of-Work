@@ -17,9 +17,10 @@ import ProjectSubmissionPage from './pages/ProjectSubmissionPage';
 import TalentDiscoveryPage from './pages/TalentDiscoveryPage';
 import HackathonsPage from './pages/HackathonsPage';
 import AdminDashboard from './pages/AdminDashboard';
+import EmployerProfile from './pages/EmployerProfile';
 
 function AppContent() {
-  const { currentView, interviewCandidate, setInterviewCandidate } = useApp();
+  const { currentView, currentUser, interviewCandidate, setInterviewCandidate } = useApp();
 
   const renderCurrentView = () => {
     switch (currentView) {
@@ -34,7 +35,13 @@ function AppContent() {
       case 'admin-dashboard':
         return <AdminDashboard />;
       case 'profile':
+        // If current user is employer viewing their own profile, render EmployerProfile
+        if (currentUser?.role === 'employer') {
+          return <EmployerProfile />;
+        }
         return <CandidateProfile />;
+      case 'employer-profile':
+        return <EmployerProfile />;
       case 'challenges':
         return <ChallengesPage />;
       case 'submit-project':

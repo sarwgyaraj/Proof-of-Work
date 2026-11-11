@@ -54,22 +54,13 @@ export default function DemoBanner() {
                   ? 'bg-brand-600 text-white font-semibold'
                   : 'bg-slate-900/90 text-slate-300 hover:text-white border border-slate-800'
               }`}
-              title="Step 1 & 2: Log in as Candidate"
+              title="Log in as Candidate"
             >
               <UserCheck className="w-3 h-3 text-brand-400" />
               <span>1. Candidate (Rohan - IITB)</span>
             </button>
 
-            {/* Step 2: Challenge Submission Shortcut */}
-            <button
-              onClick={() => navigateTo('challenges')}
-              className="px-2.5 py-1 rounded-lg bg-slate-900/90 text-slate-300 hover:text-white border border-slate-800 font-medium text-[11px] transition-colors flex items-center gap-1"
-              title="Step 3: Solve Challenge"
-            >
-              <span>2. Challenges</span>
-            </button>
-
-            {/* Step 3: Employer Flow Shortcut */}
+            {/* Step 2: Employer Flow Shortcut */}
             <button
               onClick={() => loginAs('employer')}
               className={`px-2.5 py-1 rounded-lg font-medium text-[11px] transition-colors flex items-center gap-1 ${
@@ -77,10 +68,10 @@ export default function DemoBanner() {
                   ? 'bg-violet-600 text-white font-semibold'
                   : 'bg-slate-900/90 text-slate-300 hover:text-white border border-slate-800'
               }`}
-              title="Step 4 & 5: Log in as Employer"
+              title="Log in as Employer"
             >
               <Briefcase className="w-3 h-3 text-violet-400" />
-              <span>3. Employer (Nexora - BLR)</span>
+              <span>2. Employer (Nexora - BLR)</span>
             </button>
 
             {/* Reset Demo Data button */}
