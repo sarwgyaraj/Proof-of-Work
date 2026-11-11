@@ -15,6 +15,8 @@ import CandidateProfile from './pages/CandidateProfile';
 import ChallengesPage from './pages/ChallengesPage';
 import ProjectSubmissionPage from './pages/ProjectSubmissionPage';
 import TalentDiscoveryPage from './pages/TalentDiscoveryPage';
+import HackathonsPage from './pages/HackathonsPage';
+import AdminDashboard from './pages/AdminDashboard';
 
 function AppContent() {
   const { currentView, interviewCandidate, setInterviewCandidate } = useApp();
@@ -29,6 +31,8 @@ function AppContent() {
         return <CandidateDashboard />;
       case 'employer-dashboard':
         return <EmployerDashboard />;
+      case 'admin-dashboard':
+        return <AdminDashboard />;
       case 'profile':
         return <CandidateProfile />;
       case 'challenges':
@@ -37,6 +41,8 @@ function AppContent() {
         return <ProjectSubmissionPage />;
       case 'talent':
         return <TalentDiscoveryPage />;
+      case 'hackathons':
+        return <HackathonsPage />;
       default:
         return <LandingPage />;
     }

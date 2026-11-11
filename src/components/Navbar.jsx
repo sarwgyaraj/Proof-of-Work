@@ -22,18 +22,31 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [roleDropdownOpen, setRoleDropdownOpen] = useState(false);
 
-  const isEmployer = currentUser?.role === 'employer';
+  const userRole = currentUser?.role || 'guest';
 
-  const navLinks = isEmployer
-    ? [
-        { id: 'employer-dashboard', label: 'Talent Pipeline', icon: Users },
-        { id: 'challenges', label: 'Skill Bounties', icon: Trophy },
-      ]
-    : [
-        { id: 'challenges', label: 'Skill Challenges', icon: Trophy },
-        { id: 'talent', label: 'Talent Directory', icon: Users },
-        { id: 'submit-project', label: 'Submit Proof', icon: UploadCloud },
-      ];
+  // Role-specific navigation links
+  let navLinks = [];
+  if (userRole === 'admin') {
+    navLinks = [
+      { id: 'admin-dashboard', label: 'Admin Hub', icon: LayoutDashboard },
+      { id: 'talent', label: 'Candidates', icon: Users },
+      { id: 'hackathons', label: 'Hackathons', icon: Compass },
+      { id: 'challenges', label: 'Challenges', icon: Trophy }
+    ];
+  } else if (userRole === 'employer') {
+    navLinks = [
+      { id: 'employer-dashboard', label: 'Talent Pipeline', icon: Users },
+      { id: 'talent', label: 'Talent Directory', icon: Users },
+      { id: 'challenges', label: 'Skill Bounties', icon: Trophy },
+      { id: 'hackathons', label: 'Hackathons', icon: Compass }
+    ];
+  } else {
+    navLinks = [
+      { id: 'hackathons', label: 'Hackathons', icon: Compass },
+      { id: 'challenges', label: 'Skill Challenges', icon: Trophy },
+      { id: 'submit-project', label: 'Submit Proof', icon: UploadCloud }
+    ];
+  }
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-800/80 bg-navy-950/80 backdrop-blur-md">
@@ -97,7 +110,19 @@ export default function Navbar() {
           <div className="hidden md:flex items-center gap-3">
             {currentUser ? (
               <div className="flex items-center gap-3">
-                {currentUser.role === 'candidate' ? (
+                {currentUser.role === 'admin' ? (
+                  <button
+                    onClick={() => navigateTo('admin-dashboard')}
+                    className={`flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all ${
+                      currentView === 'admin-dashboard'
+                        ? 'bg-amber-600 text-white shadow-glow-sm'
+                        : 'bg-navy-850 hover:bg-navy-800 text-slate-200 border border-slate-700/60'
+                    }`}
+                  >
+                    <LayoutDashboard className="w-3.5 h-3.5" />
+                    Admin Hub
+                  </button>
+                ) : currentUser.role === 'candidate' ? (
                   <button
                     onClick={() => navigateTo('candidate-dashboard')}
                     className={`flex items-center gap-2 px-3.5 py-1.5 text-xs font-semibold rounded-lg transition-all ${
@@ -183,6 +208,16 @@ export default function Navbar() {
                           <div className="text-[11px] text-slate-400">Pooja Kulkarni, Director • SDE Hiring</div>
                         </div>
                         <Users className="w-4 h-4 text-violet-400 opacity-60 group-hover:opacity-100" />
+                      </button>
+                      <button
+                        onClick={() => loginAs('admin')}
+                        className="w-full text-left px-3 py-2 text-xs rounded-lg hover:bg-slate-800 flex items-center justify-between text-slate-200 hover:text-white group mt-1 border-t border-slate-800/80 pt-2"
+                      >
+                        <div>
+                          <div className="font-semibold text-amber-300">Platform Administrator</div>
+                          <div className="text-[11px] text-slate-400">Vikramaditya Verma • Governance Hub</div>
+                        </div>
+                        <ShieldCheck className="w-4 h-4 text-amber-400 opacity-60 group-hover:opacity-100" />
                       </button>
                     </div>
                   )}

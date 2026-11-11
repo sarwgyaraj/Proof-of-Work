@@ -8,15 +8,15 @@ export function getInitials(name) {
   return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
-// Consistent deterministic background gradient based on name string
+// Consistent deterministic background gradient based on name string (Modern Earthy tones)
 export function getAvatarBgGradient(name) {
   const gradients = [
-    'from-indigo-600 to-violet-700 text-indigo-100',
-    'from-blue-600 to-cyan-700 text-blue-100',
-    'from-emerald-600 to-teal-700 text-emerald-100',
-    'from-violet-600 to-purple-700 text-violet-100',
-    'from-amber-600 to-orange-700 text-amber-100',
-    'from-rose-600 to-pink-700 text-rose-100'
+    'from-brand-600 to-amber-700 text-brand-50',
+    'from-violet-600 to-emerald-700 text-violet-50',
+    'from-emerald-600 to-teal-800 text-emerald-50',
+    'from-stone-700 to-neutral-800 text-slate-100',
+    'from-amber-600 to-orange-800 text-amber-50',
+    'from-rose-600 to-stone-700 text-rose-50'
   ];
   if (!name) return gradients[0];
   let hash = 0;

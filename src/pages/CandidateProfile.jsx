@@ -34,6 +34,7 @@ import {
 } from 'lucide-react';
 import ConnectedCodingProfiles from '../components/ConnectedCodingProfiles';
 import LinkedInIntegrationCard from '../components/LinkedInIntegrationCard';
+import SkillCategoriesGrid from '../components/SkillCategoriesGrid';
 
 export default function CandidateProfile() {
   const {
@@ -237,28 +238,30 @@ export default function CandidateProfile() {
               </div>
             </div>
 
-            {/* Recruiter Actions */}
-            <div className="flex items-center gap-3">
-              <button
-                onClick={() => toggleSaveCandidate(candidate.id)}
-                className={`px-4 py-2.5 rounded-xl border text-xs font-semibold transition-all flex items-center gap-2 ${
-                  isSaved
-                    ? 'bg-violet-600/20 text-violet-300 border-violet-500/40'
-                    : 'bg-navy-950 text-slate-300 hover:text-white border-slate-700'
-                }`}
-              >
-                <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-current text-violet-400' : ''}`} />
-                <span>{isSaved ? 'Shortlisted' : 'Shortlist Candidate'}</span>
-              </button>
+            {/* Recruiter Actions (Visible to Employers & Admins) */}
+            {(currentUser?.role === 'employer' || currentUser?.role === 'admin') && (
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={() => toggleSaveCandidate(candidate.id)}
+                  className={`px-4 py-2.5 rounded-xl border text-xs font-semibold transition-all flex items-center gap-2 ${
+                    isSaved
+                      ? 'bg-violet-600/20 text-violet-300 border-violet-500/40'
+                      : 'bg-navy-950 text-slate-300 hover:text-white border-slate-700'
+                  }`}
+                >
+                  <Bookmark className={`w-4 h-4 ${isSaved ? 'fill-current text-violet-400' : ''}`} />
+                  <span>{isSaved ? 'Shortlisted' : 'Shortlist Candidate'}</span>
+                </button>
 
-              <button
-                onClick={() => setInterviewCandidate(candidate)}
-                className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 text-white font-semibold text-xs shadow-glow transition-all flex items-center gap-2"
-              >
-                <Mail className="w-4 h-4" />
-                <span>Interview / Fast Track</span>
-              </button>
-            </div>
+                <button
+                  onClick={() => setInterviewCandidate(candidate)}
+                  className="px-5 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 text-white font-semibold text-xs shadow-glow transition-all flex items-center gap-2"
+                >
+                  <Mail className="w-4 h-4" />
+                  <span>Interview / Fast Track</span>
+                </button>
+              </div>
+            )}
 
           </div>
 
@@ -471,6 +474,15 @@ export default function CandidateProfile() {
                 </div>
               )}
             </div>
+          </div>
+
+          {/* Categorized Technical Skills Matrix (User Provided Format) */}
+          <div className="glass-panel p-6 sm:p-7 rounded-3xl border border-slate-800">
+            <SkillCategoriesGrid
+              categories={candidate.skillCategories}
+              title="Programming & Technical Skill Proficiencies"
+              subtitle="Demonstrated ability & verified code benchmark proficiency by technical domain"
+            />
           </div>
 
           {/* Programming Languages & Technical Skills Grid */}

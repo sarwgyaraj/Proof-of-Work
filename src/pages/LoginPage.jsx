@@ -70,11 +70,11 @@ export default function LoginPage() {
               </span>
             </div>
 
-            <div className="grid grid-cols-2 gap-2 text-left">
+            <div className="grid grid-cols-3 gap-2 text-left">
               <button
                 type="button"
                 onClick={() => handleRoleSelection('candidate')}
-                className={`p-2.5 rounded-xl border text-xs transition-all ${
+                className={`p-2 rounded-xl border text-xs transition-all ${
                   selectedRole === 'candidate'
                     ? 'bg-brand-600/25 border-brand-500 text-white shadow-glow-sm'
                     : 'bg-navy-950/80 border-slate-800 text-slate-300 hover:border-slate-700'
@@ -91,7 +91,7 @@ export default function LoginPage() {
               <button
                 type="button"
                 onClick={() => handleRoleSelection('employer')}
-                className={`p-2.5 rounded-xl border text-xs transition-all ${
+                className={`p-2 rounded-xl border text-xs transition-all ${
                   selectedRole === 'employer'
                     ? 'bg-violet-600/25 border-violet-500 text-white shadow-glow-sm'
                     : 'bg-navy-950/80 border-slate-800 text-slate-300 hover:border-slate-700'
@@ -102,6 +102,27 @@ export default function LoginPage() {
                   <span>Employer</span>
                 </div>
                 <div className="text-[10px] text-slate-400 truncate mt-0.5">employer@proofwork.demo</div>
+                <div className="text-[10px] text-slate-500 font-mono">pw: demo123</div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedRole('admin');
+                  setEmail('admin@proofwork.demo');
+                  setPassword('demo123');
+                }}
+                className={`p-2 rounded-xl border text-xs transition-all ${
+                  selectedRole === 'admin'
+                    ? 'bg-amber-600/25 border-amber-500 text-white shadow-glow-sm'
+                    : 'bg-navy-950/80 border-slate-800 text-slate-300 hover:border-slate-700'
+                }`}
+              >
+                <div className="font-bold text-amber-300 flex items-center gap-1">
+                  <ShieldCheck className="w-3.5 h-3.5" />
+                  <span>Admin</span>
+                </div>
+                <div className="text-[10px] text-slate-400 truncate mt-0.5">admin@proofwork.demo</div>
                 <div className="text-[10px] text-slate-500 font-mono">pw: demo123</div>
               </button>
             </div>

@@ -1,5 +1,16 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { INITIAL_USER, INITIAL_EMPLOYER, SAMPLE_CHALLENGES, SAMPLE_CANDIDATES, SAMPLE_PROJECTS } from '../data/mockData';
+import {
+  INITIAL_USER,
+  INITIAL_EMPLOYER,
+  INITIAL_ADMIN,
+  INITIAL_EMPLOYERS_LIST,
+  INITIAL_AUDIT_LOGS,
+  SAMPLE_CHALLENGES,
+  SAMPLE_CANDIDATES,
+  SAMPLE_PROJECTS
+} from '../data/mockData';
+import { SAMPLE_HACKATHONS } from '../data/mockHackathons';
+import { canAccessRoute, ROLES } from '../utils/rbac';
 
 const AppContext = createContext();
 
@@ -23,6 +34,9 @@ export function AppProvider({ children }) {
       if (parsed.id === INITIAL_EMPLOYER.id) {
         return { ...parsed, avatar: INITIAL_EMPLOYER.avatar };
       }
+      if (parsed.id === INITIAL_ADMIN.id) {
+        return { ...parsed, avatar: INITIAL_ADMIN.avatar };
+      }
       return parsed;
     } catch {
       return INITIAL_USER;
@@ -43,7 +57,18 @@ export function AppProvider({ children }) {
   // Challenges
   const [challenges, setChallenges] = useState(() => {
     const saved = localStorage.getItem('pow_challenges');
-    return saved ? JSON.parse(saved) : SAMPLE_CHALLENGES;
+    if (!saved) return SAMPLE_CHALLENGES;
+    try {
+      const parsed = JSON.parse(saved);
+      // Sync canonical categories/data from SAMPLE_CHALLENGES
+      if (!Array.isArray(parsed) || parsed.length === 0) return SAMPLE_CHALLENGES;
+      return parsed.map((ch) => {
+        const canonical = SAMPLE_CHALLENGES.find((item) => item.id === ch.id);
+        return canonical ? { ...ch, category: canonical.category } : ch;
+      });
+    } catch {
+      return SAMPLE_CHALLENGES;
+    }
   });
 
   // User's challenge submissions (persisted in LocalStorage)
@@ -78,6 +103,62 @@ export function AppProvider({ children }) {
   const [viewedProfileId, setViewedProfileId] = useState(() => {
     return localStorage.getItem('pow_viewed_profile_id') || 'cand-001';
   });
+
+  // Hackathons (persisted in LocalStorage)
+  const [hackathons, setHackathons] = useState(() => {
+    const saved = localStorage.getItem('pow_hackathons');
+    if (!saved) return SAMPLE_HACKATHONS;
+    try {
+      const parsed = JSON.parse(saved);
+      return Array.isArray(parsed) && parsed.length > 0 ? parsed : SAMPLE_HACKATHONS;
+    } catch {
+      return SAMPLE_HACKATHONS;
+    }
+  });
+
+  // Bookmarked / Saved hackathon IDs by candidate
+  const [savedHackathonIds, setSavedHackathonIds] = useState(() => {
+    const saved = localStorage.getItem('pow_saved_hackathons');
+    return saved ? JSON.parse(saved) : ['hack-sih-2026', 'hack-flipkart-grid'];
+  });
+
+  // Selected hackathon for detailed modal view
+  const [selectedHackathon, setSelectedHackathon] = useState(null);
+
+  // Employers list for administration
+  const [employersList, setEmployersList] = useState(() => {
+    const saved = localStorage.getItem('pow_employers_list');
+    return saved ? JSON.parse(saved) : INITIAL_EMPLOYERS_LIST;
+  });
+
+  // Admin audit activity logs
+  const [auditLogs, setAuditLogs] = useState(() => {
+    const saved = localStorage.getItem('pow_audit_logs');
+    return saved ? JSON.parse(saved) : INITIAL_AUDIT_LOGS;
+  });
+
+  // Helper to record an authorized administrative action
+  const logAuditAction = (action, target, details, actor = currentUser?.email || 'admin@proofwork.demo') => {
+    const newEntry = {
+      id: `log-${Date.now()}`,
+      timestamp: new Date().toISOString().replace('T', ' ').substring(0, 19),
+      actor,
+      action,
+      target,
+      details,
+      status: 'Success'
+    };
+    setAuditLogs((prev) => [newEntry, ...prev]);
+  };
+
+  const toggleSaveHackathon = (hackathonId) => {
+    setSavedHackathonIds((prev) => {
+      const exists = prev.includes(hackathonId);
+      const next = exists ? prev.filter((id) => id !== hackathonId) : [...prev, hackathonId];
+      showToast(exists ? 'Hackathon removed from saved bookmarks' : 'Hackathon bookmarked to your list!');
+      return next;
+    });
+  };
 
   // Toast notifications
   const [toast, setToast] = useState(null);
@@ -126,51 +207,89 @@ export function AppProvider({ children }) {
     localStorage.setItem('pow_viewed_profile_id', viewedProfileId);
   }, [viewedProfileId]);
 
+  useEffect(() => {
+    localStorage.setItem('pow_hackathons', JSON.stringify(hackathons));
+  }, [hackathons]);
+
+  useEffect(() => {
+    localStorage.setItem('pow_saved_hackathons', JSON.stringify(savedHackathonIds));
+  }, [savedHackathonIds]);
+
+  useEffect(() => {
+    localStorage.setItem('pow_employers_list', JSON.stringify(employersList));
+  }, [employersList]);
+
+  useEffect(() => {
+    localStorage.setItem('pow_audit_logs', JSON.stringify(auditLogs));
+  }, [auditLogs]);
+
   // Actions
   const navigateTo = (view, profileId = null) => {
     if (profileId) {
       setViewedProfileId(profileId);
     }
+
+    // Role-Based Route Access Enforcement Guard
+    if (!canAccessRoute(currentUser, view)) {
+      showToast('Access Denied: You do not have permission to view that section.', 'error');
+      // Redirect to permitted default view based on active role
+      if (currentUser?.role === ROLES.EMPLOYER) {
+        setCurrentView('employer-dashboard');
+      } else if (currentUser?.role === ROLES.ADMIN) {
+        setCurrentView('admin-dashboard');
+      } else if (currentUser?.role === ROLES.CANDIDATE) {
+        setCurrentView('candidate-dashboard');
+      } else {
+        setCurrentView('landing');
+      }
+      return;
+    }
+
     setCurrentView(view);
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
-  const loginWithCredentials = (inputEmail, inputPassword) => {
+  const loginWithCredentials = (inputEmail, inputPassword, signupRole = null) => {
     const cleanEmail = inputEmail.trim().toLowerCase();
     
-    if (cleanEmail === 'candidate@proofwork.demo' || cleanEmail.includes('candidate')) {
-      setCurrentUser(INITIAL_USER);
-      setActiveRole('candidate');
-      navigateTo('candidate-dashboard');
-      showToast('Signed in as Rohan Sharma (Candidate Demo)');
+    if (cleanEmail === 'admin@proofwork.demo' || cleanEmail.includes('admin')) {
+      setCurrentUser(INITIAL_ADMIN);
+      setActiveRole('admin');
+      navigateTo('admin-dashboard');
+      showToast('Signed in as Vikramaditya Verma (Platform Administrator)');
       return true;
-    } else if (cleanEmail === 'employer@proofwork.demo' || cleanEmail.includes('employer')) {
+    } else if (cleanEmail === 'employer@proofwork.demo' || (signupRole === 'employer' && !cleanEmail.includes('candidate'))) {
       setCurrentUser(INITIAL_EMPLOYER);
       setActiveRole('employer');
       navigateTo('employer-dashboard');
       showToast('Signed in as Pooja Kulkarni (Nexora Technologies)');
       return true;
     } else {
-      // Default to candidate if random credentials used during demo
+      // Default to candidate
       setCurrentUser(INITIAL_USER);
       setActiveRole('candidate');
       navigateTo('candidate-dashboard');
-      showToast('Signed in with demo access');
+      showToast('Signed in as Rohan Sharma (Candidate)');
       return true;
     }
   };
 
   const loginAs = (role) => {
-    if (role === 'candidate') {
-      setCurrentUser(INITIAL_USER);
-      setActiveRole('candidate');
-      navigateTo('candidate-dashboard');
-      showToast('Signed in as Rohan Sharma (IIT Bombay - Candidate Demo)');
-    } else {
+    if (role === 'admin') {
+      setCurrentUser(INITIAL_ADMIN);
+      setActiveRole('admin');
+      navigateTo('admin-dashboard');
+      showToast('Signed in as Platform Administrator');
+    } else if (role === 'employer') {
       setCurrentUser(INITIAL_EMPLOYER);
       setActiveRole('employer');
       navigateTo('employer-dashboard');
       showToast('Signed in as Pooja Kulkarni (Nexora Technologies - Bengaluru)');
+    } else {
+      setCurrentUser(INITIAL_USER);
+      setActiveRole('candidate');
+      navigateTo('candidate-dashboard');
+      showToast('Signed in as Rohan Sharma (IIT Bombay - Candidate Demo)');
     }
   };
 
@@ -301,6 +420,69 @@ export function AppProvider({ children }) {
     });
   };
 
+  // Administrative Actions (Authorized for Admin Role only)
+  const toggleCandidateStatus = (candidateId) => {
+    if (currentUser?.role !== ROLES.ADMIN) {
+      showToast('Unauthorized: Only administrators can modify candidate accounts.', 'error');
+      return;
+    }
+
+    setCandidates((prev) =>
+      prev.map((c) => {
+        if (c.id === candidateId) {
+          const nextStatus = c.accountStatus === 'Suspended' ? 'Active' : 'Suspended';
+          logAuditAction(
+            nextStatus === 'Suspended' ? 'SUSPENDED_CANDIDATE' : 'REACTIVATED_CANDIDATE',
+            `${c.name} (${c.id})`,
+            `Account status updated to ${nextStatus}.`
+          );
+          showToast(`Candidate ${c.name} status updated to ${nextStatus}`);
+          return { ...c, accountStatus: nextStatus };
+        }
+        return c;
+      })
+    );
+  };
+
+  const verifyEmployerOrg = (employerId) => {
+    if (currentUser?.role !== ROLES.ADMIN) {
+      showToast('Unauthorized: Only administrators can verify employers.', 'error');
+      return;
+    }
+
+    setEmployersList((prev) =>
+      prev.map((emp) => {
+        if (emp.id === employerId) {
+          const nextStatus = emp.verificationStatus === 'Verified Enterprise' ? 'Pending Verification' : 'Verified Enterprise';
+          logAuditAction(
+            'UPDATED_EMPLOYER_VERIFICATION',
+            `${emp.company} (${emp.id})`,
+            `Organization trust tier updated to ${nextStatus}.`
+          );
+          showToast(`${emp.company} verification updated to ${nextStatus}`);
+          return { ...emp, verificationStatus: nextStatus };
+        }
+        return emp;
+      })
+    );
+  };
+
+  const updateUserRole = (userId, targetNewRole) => {
+    if (currentUser?.role !== ROLES.ADMIN) {
+      showToast('Unauthorized: Only administrators can assign or alter user roles.', 'error');
+      return false;
+    }
+
+    // Role changes are permanently recorded in administrative audit logs
+    logAuditAction(
+      'ASSIGNED_USER_ROLE',
+      `User ${userId}`,
+      `Authorized role transition to ${targetNewRole.toUpperCase()}.`
+    );
+    showToast(`User ${userId} role updated to ${targetNewRole}`);
+    return true;
+  };
+
   // Modal state for direct pinging/interviews
   const [interviewCandidate, setInterviewCandidate] = useState(null);
 
@@ -332,7 +514,19 @@ export function AppProvider({ children }) {
         challengeSubmissions,
         submitChallengeSolution,
         interviewCandidate,
-        setInterviewCandidate
+        setInterviewCandidate,
+        hackathons,
+        setHackathons,
+        savedHackathonIds,
+        toggleSaveHackathon,
+        selectedHackathon,
+        setSelectedHackathon,
+        employersList,
+        auditLogs,
+        logAuditAction,
+        toggleCandidateStatus,
+        verifyEmployerOrg,
+        updateUserRole
       }}
     >
       {children}

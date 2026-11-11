@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import Avatar from '../components/Avatar';
 import LinkedInIntegrationCard from '../components/LinkedInIntegrationCard';
+import HackathonCard from '../components/HackathonCard';
+import HackathonDetailModal from '../components/HackathonDetailModal';
+import { evaluateHackathonEligibility } from '../utils/hackathonEligibility';
 import {
   ShieldCheck,
   Trophy,
@@ -38,6 +41,9 @@ export default function CandidateDashboard() {
     toggleVisibility,
     projects,
     challenges,
+    hackathons,
+    selectedHackathon,
+    setSelectedHackathon,
     navigateTo,
     showToast,
     participateChallenge
@@ -370,6 +376,45 @@ export default function CandidateDashboard() {
         </div>
       </div>
 
+      {/* 4.5 Curated "Hackathons for You" Section */}
+      <div className="glass-panel p-6 sm:p-7 rounded-3xl border border-slate-800 space-y-5">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800/80 pb-4">
+          <div>
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-bold text-white flex items-center gap-2">
+                <Compass className="w-5 h-5 text-brand-400" />
+                Hackathons for You in India
+              </h2>
+              <span className="text-[10px] font-mono font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-brand-500/15 text-brand-300 border border-brand-500/30">
+                Curated Matches
+              </span>
+            </div>
+            <p className="text-xs text-slate-400 mt-1">
+              Top opportunities across SIH, tech giants, startups & colleges evaluated against your degree, batch & tech stack.
+            </p>
+          </div>
+
+          <button
+            onClick={() => navigateTo('hackathons')}
+            className="text-xs font-semibold text-brand-400 hover:text-brand-300 flex items-center gap-1.5 self-start sm:self-auto bg-navy-950 px-3.5 py-2 rounded-xl border border-slate-800 hover:border-slate-750 transition-colors"
+          >
+            <span>View All Hackathons ({hackathons.length})</span>
+            <ArrowRight className="w-3.5 h-3.5" />
+          </button>
+        </div>
+
+        {/* Curated selection of 3 top hackathons */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {hackathons.slice(0, 3).map((hack) => (
+            <HackathonCard
+              key={hack.id}
+              hackathon={hack}
+              onSelect={setSelectedHackathon}
+            />
+          ))}
+        </div>
+      </div>
+
       {/* Main Grid: 5. My Projects (Left) vs 6. Challenges & 7. Recent Activity (Right) */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         
@@ -593,6 +638,13 @@ export default function CandidateDashboard() {
         isOpen={isEditModalOpen}
         onClose={() => setIsEditModalOpen(false)}
         onSave={updateProfile}
+      />
+
+      {/* Detailed Hackathon Modal Dialog */}
+      <HackathonDetailModal
+        hackathon={selectedHackathon}
+        isOpen={Boolean(selectedHackathon)}
+        onClose={() => setSelectedHackathon(null)}
       />
 
     </div>

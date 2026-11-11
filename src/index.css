@@ -4,51 +4,52 @@
 
 @layer base {
   body {
-    background-color: #070b14;
-    color: #f1f5f9;
+    background-color: #151311;
+    color: #F3EFEA;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
   }
 }
 
-/* Custom scrollbars */
+/* Custom earthy scrollbars */
 ::-webkit-scrollbar {
   width: 8px;
   height: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #0c1222;
+  background: #191613;
 }
 ::-webkit-scrollbar-thumb {
-  background: #213363;
+  background: #3D3630;
   border-radius: 4px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #2f4886;
+  background: #524942;
 }
 
-/* Subtle glassmorphism and glow effects */
+/* Subtle warm glassmorphism and earthy glow effects */
 .glass-panel {
-  background: rgba(16, 25, 48, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(29, 26, 23, 0.78);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(228, 221, 213, 0.08);
 }
 
 .glass-panel-hover {
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .glass-panel-hover:hover {
-  background: rgba(22, 34, 68, 0.85);
-  border-color: rgba(99, 102, 241, 0.3);
+  background: rgba(36, 32, 28, 0.92);
+  border-color: rgba(180, 110, 70, 0.35);
   transform: translateY(-2px);
-  box-shadow: 0 12px 30px -10px rgba(99, 102, 241, 0.15);
+  box-shadow: 0 12px 30px -10px rgba(18, 15, 13, 0.5), 0 0 20px -5px rgba(180, 110, 70, 0.15);
 }
 
 .glow-gradient {
-  background: radial-gradient(circle at 50% 0%, rgba(99, 102, 241, 0.15) 0%, rgba(7, 11, 20, 0) 70%);
+  background: radial-gradient(circle at 50% 0%, rgba(180, 110, 70, 0.18) 0%, rgba(21, 19, 17, 0) 70%);
 }
 
 .badge-verified {
-  background: linear-gradient(135deg, rgba(99, 102, 241, 0.15) 0%, rgba(139, 92, 246, 0.15) 100%);
-  border: 1px solid rgba(99, 102, 241, 0.3);
+  background: linear-gradient(135deg, rgba(180, 110, 70, 0.18) 0%, rgba(98, 131, 98, 0.18) 100%);
+  border: 1px solid rgba(180, 110, 70, 0.35);
 }
 

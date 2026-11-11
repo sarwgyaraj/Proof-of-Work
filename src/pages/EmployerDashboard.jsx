@@ -21,8 +21,11 @@ import {
   Filter,
   CheckCircle2,
   Building,
-  Briefcase
+  Briefcase,
+  ChevronDown,
+  ChevronUp
 } from 'lucide-react';
+import SkillCategoriesGrid from '../components/SkillCategoriesGrid';
 
 export default function EmployerDashboard() {
   const {
@@ -36,6 +39,7 @@ export default function EmployerDashboard() {
   } = useApp();
 
   const [activeTab, setActiveTab] = useState('discovery'); // 'discovery' | 'shortlisted'
+  const [expandedSkillsCandidateId, setExpandedSkillsCandidateId] = useState(null);
 
   // Search & Filter state specifically for CS and Software Engineering:
   // - Programming language
@@ -474,7 +478,7 @@ export default function EmployerDashboard() {
                         )}
 
                         {/* Skills pills */}
-                        <div className="flex flex-wrap gap-1.5 pt-1.5">
+                        <div className="flex flex-wrap items-center gap-1.5 pt-1.5">
                           {cand.skills.map((s) => (
                             <span
                               key={s}
@@ -483,6 +487,23 @@ export default function EmployerDashboard() {
                               {s}
                             </span>
                           ))}
+
+                          {/* Toggle Skill Categories Breakdown */}
+                          <button
+                            onClick={() =>
+                              setExpandedSkillsCandidateId(
+                                expandedSkillsCandidateId === cand.id ? null : cand.id
+                              )
+                            }
+                            className="text-[11px] px-2.5 py-0.5 rounded bg-teal-500/10 hover:bg-teal-500/20 text-teal-300 border border-teal-500/30 font-medium flex items-center gap-1 transition-colors"
+                          >
+                            <span>{expandedSkillsCandidateId === cand.id ? 'Hide Skill Matrix' : 'View Skill Matrix'}</span>
+                            {expandedSkillsCandidateId === cand.id ? (
+                              <ChevronUp className="w-3 h-3" />
+                            ) : (
+                              <ChevronDown className="w-3 h-3" />
+                            )}
+                          </button>
                         </div>
 
                       </div>
@@ -543,6 +564,17 @@ export default function EmployerDashboard() {
                       </div>
 
                     </div>
+
+                    {/* Expandable Multi-Domain Skill Categories Matrix */}
+                    {expandedSkillsCandidateId === cand.id && (
+                      <div className="pt-4 border-t border-slate-850">
+                        <SkillCategoriesGrid
+                          categories={cand.skillCategories}
+                          title={`${cand.name}'s Verified Skills Breakdown`}
+                          subtitle="Multi-category evaluation across Programming, AI & ML, Design, Backend, and Tools"
+                        />
+                      </div>
+                    )}
 
                   </div>
                 );

@@ -45,6 +45,60 @@ export const INITIAL_USER = {
     'REST & gRPC APIs'
   ],
 
+  // Structured multi-domain skill categories
+  skillCategories: [
+    {
+      id: 'programming',
+      title: 'Programming',
+      skills: [
+        { name: 'Python', percentage: 90 },
+        { name: 'JavaScript', percentage: 85 },
+        { name: 'React', percentage: 88 },
+        { name: 'TypeScript', percentage: 82 }
+      ]
+    },
+    {
+      id: 'ai-ml',
+      title: 'AI & ML',
+      skills: [
+        { name: 'Agentic AI', percentage: 92 },
+        { name: 'LLMs', percentage: 88 },
+        { name: 'AI Agent Development', percentage: 90 },
+        { name: 'Prompt Engineering', percentage: 85 }
+      ]
+    },
+    {
+      id: 'design',
+      title: 'Design',
+      skills: [
+        { name: 'UX/UI Design', percentage: 87 },
+        { name: 'Figma', percentage: 83 },
+        { name: 'User Research', percentage: 85 },
+        { name: 'Prototyping', percentage: 86 }
+      ]
+    },
+    {
+      id: 'backend',
+      title: 'Backend',
+      skills: [
+        { name: 'FastAPI', percentage: 88 },
+        { name: 'API Integration', percentage: 90 },
+        { name: 'Database Design', percentage: 82 },
+        { name: 'Postman / REST', percentage: 80 }
+      ]
+    },
+    {
+      id: 'tools',
+      title: 'Tools',
+      skills: [
+        { name: 'Git & GitHub', percentage: 89 },
+        { name: 'VS Code', percentage: 92 },
+        { name: 'Docker', percentage: 78 },
+        { name: 'Vercel', percentage: 85 }
+      ]
+    }
+  ],
+
   // 4. Connected Coding Profiles (Labeled as DEMO DATA)
   codingProfiles: {
     leetcode: {
@@ -181,6 +235,96 @@ export const INITIAL_EMPLOYER = {
   ],
   savedCandidates: ['cand-001', 'cand-002', 'cand-004']
 };
+
+export const INITIAL_ADMIN = {
+  id: 'admin-001',
+  role: 'admin',
+  name: 'Vikramaditya Verma',
+  title: 'Platform Lead & Trust & Safety Administrator',
+  avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300',
+  email: 'admin@proofwork.demo',
+  department: 'Operations, Moderation & Security',
+  accessLevel: 'Tier 1 - Full Governance',
+  lastAuditAction: '2026-11-12T01:40:00Z'
+};
+
+export const INITIAL_EMPLOYERS_LIST = [
+  {
+    id: 'emp-101',
+    company: 'Nexora Technologies',
+    name: 'Pooja Kulkarni',
+    email: 'employer@proofwork.demo',
+    role: 'employer',
+    title: 'Engineering Director & Campus Hiring Lead',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300',
+    location: 'Bengaluru, Karnataka',
+    industry: 'FinTech & Cloud Infrastructure',
+    verificationStatus: 'Verified Enterprise',
+    accountStatus: 'Active',
+    membersCount: 8,
+    activeListingsCount: 3
+  },
+  {
+    id: 'emp-102',
+    company: 'Razorpay Software',
+    name: 'Arjun Mehta',
+    email: 'arjun.mehta@razorpay.mock',
+    role: 'employer',
+    title: 'Staff Tech Recruiter',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300',
+    location: 'Bengaluru, Karnataka',
+    industry: 'Payment Gateways & Banking API',
+    verificationStatus: 'Verified Enterprise',
+    accountStatus: 'Active',
+    membersCount: 14,
+    activeListingsCount: 5
+  },
+  {
+    id: 'emp-103',
+    company: 'KissanAI Labs',
+    name: 'Deepika Rao',
+    email: 'deepika@kissanai.mock',
+    role: 'employer',
+    title: 'Founding Engineer & CTO',
+    avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300',
+    location: 'Hyderabad, Telangana',
+    industry: 'AgriTech & AI Agents',
+    verificationStatus: 'Pending Verification',
+    accountStatus: 'Active',
+    membersCount: 3,
+    activeListingsCount: 1
+  }
+];
+
+export const INITIAL_AUDIT_LOGS = [
+  {
+    id: 'log-001',
+    timestamp: '2026-11-12 02:15:20',
+    actor: 'admin@proofwork.demo',
+    action: 'VERIFIED_ORGANIZATION',
+    target: 'Razorpay Software (emp-102)',
+    details: 'Corporate domain razorpay.com cryptographic DNS verification approved.',
+    status: 'Success'
+  },
+  {
+    id: 'log-002',
+    timestamp: '2026-11-12 01:45:10',
+    actor: 'admin@proofwork.demo',
+    action: 'AUDITED_HACKATHON',
+    target: 'Smart India Hackathon (hack-sih-2026)',
+    details: 'Verified AICTE/MoE official problem statement schedule and nodal centers.',
+    status: 'Success'
+  },
+  {
+    id: 'log-003',
+    timestamp: '2026-11-11 22:30:00',
+    actor: 'system',
+    action: 'AUTOMATED_AST_CHECK',
+    target: 'cand-001 (Kestrel Stream Repo)',
+    details: 'CI verification test suite execution: 34 tests passed, 0 GC pauses.',
+    status: 'Verified'
+  }
+];
 
 export const SAMPLE_CANDIDATES = [
   {
@@ -547,7 +691,7 @@ export const SAMPLE_CHALLENGES = [
   {
     id: 'chal-java-1',
     title: 'Java DSA Challenge: Order Matching Engine',
-    category: 'Java DSA Challenge',
+    category: 'Java Programming',
     difficulty: 'Advanced',
     reward: 'Java Systems Verified Badge (Demo)',
     timeEst: '2 - 3 hours',
@@ -568,7 +712,7 @@ export const SAMPLE_CHALLENGES = [
   {
     id: 'chal-array-1',
     title: 'Array and String Problems: Subarray Sum & Window Kadane',
-    category: 'Array and String Problems',
+    category: 'Data Structures and Algorithms',
     difficulty: 'Medium',
     reward: 'Algorithmic DSA Badge (Demo)',
     timeEst: '1.5 hours',
@@ -588,7 +732,7 @@ export const SAMPLE_CHALLENGES = [
   {
     id: 'chal-sql-1',
     title: 'SQL Query Challenge: High-Frequency Ledger & Window Aggregates',
-    category: 'SQL Query Challenge',
+    category: 'Data Analysis',
     difficulty: 'Medium',
     reward: 'Database Mastery Badge (Demo)',
     timeEst: '1.5 hours',
@@ -608,7 +752,7 @@ export const SAMPLE_CHALLENGES = [
   {
     id: 'chal-react-1',
     title: 'React Frontend Task: Virtualized Order Book & Real-Time Ticks',
-    category: 'React Frontend Task',
+    category: 'Web Development',
     difficulty: 'Hard',
     reward: 'React Lead Badge (Demo)',
     timeEst: '2 - 3 hours',
@@ -626,9 +770,29 @@ export const SAMPLE_CHALLENGES = [
     submissionCount: 132
   },
   {
+    id: 'chal-uiux-1',
+    title: 'UI/UX Design Challenge: Modern Fintech Trading Terminal',
+    category: 'UI/UX Design',
+    difficulty: 'Medium',
+    reward: 'UI/UX Specialist Badge (Demo)',
+    timeEst: '2.5 hours',
+    deadline: 'Dec 10, 2026',
+    participants: 295,
+    completionRate: '45%',
+    requiredSkills: ['Figma', 'Design Systems', 'Micro-interactions', 'Accessibility'],
+    tags: ['UI/UX', 'Design System', 'Dark Mode', 'Figma'],
+    description: 'Design an accessible, high-density order execution dashboard with high contrast WCAG AAA compliance, keyboard navigation focus rings, and modular dock panels.',
+    requirements: [
+      'Interactive Figma or live HTML/CSS prototype',
+      'Standardized spacing tokens and typography scale',
+      'Full keyboard accessibility and clear visual status states'
+    ],
+    submissionCount: 110
+  },
+  {
     id: 'chal-api-1',
     title: 'REST API Development: Idempotent Payment Webhook Service',
-    category: 'REST API Development',
+    category: 'Web Development',
     difficulty: 'Medium',
     reward: 'API Architect Badge (Demo)',
     timeEst: '2 hours',
@@ -648,7 +812,7 @@ export const SAMPLE_CHALLENGES = [
   {
     id: 'chal-python-1',
     title: 'Python Data Analysis: E-commerce Funnel & Cohort Retention',
-    category: 'Python Data Analysis',
+    category: 'Data Analysis',
     difficulty: 'Medium',
     reward: 'Data Analyst Badge (Demo)',
     timeEst: '2 hours',
