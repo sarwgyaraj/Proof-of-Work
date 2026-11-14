@@ -6,8 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview",
-    "deploy": "vite build && git checkout -B gh-pages && git add -f dist && git commit -m \"deploy: update gh-pages\" && git subtree split --prefix dist -b gh-pages-root && git checkout main && git branch -D gh-pages && git branch -m gh-pages-root gh-pages && git push -f origin gh-pages"
+    "preview": "vite preview"
   },
   "dependencies": {
     "lucide-react": "^0.475.0",
