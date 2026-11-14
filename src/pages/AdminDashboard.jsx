@@ -33,6 +33,7 @@ export default function AdminDashboard() {
     hackathons,
     toggleCandidateStatus,
     verifyEmployerOrg,
+    updateOrganizationType,
     updateUserRole,
     navigateTo,
     showToast
@@ -286,25 +287,56 @@ export default function AdminDashboard() {
             <table className="w-full text-left text-xs">
               <thead className="text-[10px] text-slate-400 uppercase font-mono border-b border-slate-800 bg-navy-950/60">
                 <tr>
-                  <th className="p-3">Company</th>
-                  <th className="p-3">Hiring Lead</th>
-                  <th className="p-3">Industry</th>
+                  <th className="p-3">Organization</th>
+                  <th className="p-3">Lead Contact</th>
+                  <th className="p-3">Classification</th>
                   <th className="p-3">Trust Tier</th>
-                  <th className="p-3 text-right">Action</th>
+                  <th className="p-3 text-right">Admin Actions</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-800/60 font-medium">
                 {employersList.map((emp) => (
                   <tr key={emp.id} className="hover:bg-slate-800/30 transition-colors">
                     <td className="p-3">
-                      <div className="font-bold text-white">{emp.company}</div>
+                      <div className="font-bold text-white flex items-center gap-1.5">
+                        <span>{emp.company}</span>
+                        {emp.institutionId && (
+                          <span className="font-mono text-[9px] bg-emerald-950 text-emerald-400 px-1 rounded border border-emerald-800">
+                            {emp.institutionId}
+                          </span>
+                        )}
+                      </div>
                       <div className="text-[11px] text-slate-400">{emp.location}</div>
                     </td>
                     <td className="p-3">
                       <div className="text-slate-200">{emp.name}</div>
                       <div className="text-[11px] text-slate-400">{emp.email}</div>
                     </td>
-                    <td className="p-3 text-slate-300">{emp.industry}</td>
+                    <td className="p-3">
+                      <div className="flex items-center gap-2">
+                        <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold ${
+                          emp.organizationType === 'educational_institution'
+                            ? 'bg-emerald-500/15 text-emerald-300 border border-emerald-500/30'
+                            : 'bg-sky-500/15 text-sky-300 border border-sky-500/30'
+                        }`}>
+                          {emp.organizationType === 'educational_institution'
+                            ? 'Educational Institution'
+                            : 'Corporate Organisation'}
+                        </span>
+                        <button
+                          onClick={() => {
+                            const nextType = emp.organizationType === 'educational_institution'
+                              ? 'corporate'
+                              : 'educational_institution';
+                            updateOrganizationType(emp.id, nextType);
+                          }}
+                          className="text-[10px] text-brand-400 hover:text-brand-300 underline font-mono ml-1"
+                          title="Toggle Organization Type (Admin only)"
+                        >
+                          Change
+                        </button>
+                      </div>
+                    </td>
                     <td className="p-3">
                       <span className={`px-2 py-0.5 rounded-full text-[10px] font-mono font-semibold ${
                         emp.verificationStatus === 'Verified Enterprise'

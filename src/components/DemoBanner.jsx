@@ -9,7 +9,9 @@ import {
   Info,
   X,
   UserCheck,
-  Briefcase
+  Briefcase,
+  GraduationCap,
+  Building2
 } from 'lucide-react';
 
 export default function DemoBanner() {
@@ -49,7 +51,7 @@ export default function DemoBanner() {
             {/* Step 1: Candidate Flow Shortcut */}
             <button
               onClick={() => loginAs('candidate')}
-              className={`px-2.5 py-1 rounded-lg font-medium text-[11px] transition-colors flex items-center gap-1 ${
+              className={`px-2 py-1 rounded-lg font-medium text-[11px] transition-colors flex items-center gap-1 ${
                 currentUser?.role === 'candidate'
                   ? 'bg-brand-600 text-white font-semibold'
                   : 'bg-slate-900/90 text-slate-300 hover:text-white border border-slate-800'
@@ -57,21 +59,35 @@ export default function DemoBanner() {
               title="Log in as Candidate"
             >
               <UserCheck className="w-3 h-3 text-brand-400" />
-              <span>1. Candidate (Rohan - IITB)</span>
+              <span>1. Candidate (Rohan)</span>
             </button>
 
-            {/* Step 2: Employer Flow Shortcut */}
+            {/* Step 2: Vedam School of Technology (Educational Institution) */}
             <button
-              onClick={() => loginAs('employer')}
-              className={`px-2.5 py-1 rounded-lg font-medium text-[11px] transition-colors flex items-center gap-1 ${
-                currentUser?.role === 'employer'
-                  ? 'bg-violet-600 text-white font-semibold'
+              onClick={() => loginAs('vedam')}
+              className={`px-2 py-1 rounded-lg font-medium text-[11px] transition-colors flex items-center gap-1 ${
+                currentUser?.id === 'emp-vedam-01'
+                  ? 'bg-emerald-600 text-white font-semibold shadow-glow-sm'
                   : 'bg-slate-900/90 text-slate-300 hover:text-white border border-slate-800'
               }`}
-              title="Log in as Employer"
+              title="Log in as Vedam School of Technology (Educational Institution - sees Employees & Students)"
             >
-              <Briefcase className="w-3 h-3 text-violet-400" />
-              <span>2. Employer (Nexora - BLR)</span>
+              <GraduationCap className="w-3 h-3 text-emerald-400" />
+              <span>2. Vedam (Institution)</span>
+            </button>
+
+            {/* Step 3: Microsoft (Corporate Organisation) */}
+            <button
+              onClick={() => loginAs('microsoft')}
+              className={`px-2 py-1 rounded-lg font-medium text-[11px] transition-colors flex items-center gap-1 ${
+                currentUser?.id === 'emp-microsoft-01'
+                  ? 'bg-sky-600 text-white font-semibold shadow-glow-sm'
+                  : 'bg-slate-900/90 text-slate-300 hover:text-white border border-slate-800'
+              }`}
+              title="Log in as Microsoft (Corporate Organisation - sees Employees only)"
+            >
+              <Building2 className="w-3 h-3 text-sky-400" />
+              <span>3. Microsoft (Corporate)</span>
             </button>
 
             {/* Reset Demo Data button */}

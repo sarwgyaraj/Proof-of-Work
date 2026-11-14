@@ -3,6 +3,8 @@ import {
   INITIAL_USER,
   INITIAL_EMPLOYER,
   INITIAL_ADMIN,
+  INITIAL_VEDAM_INSTITUTION,
+  INITIAL_MICROSOFT_ORG,
   INITIAL_EMPLOYERS_LIST,
   INITIAL_AUDIT_LOGS,
   SAMPLE_CHALLENGES,
@@ -263,6 +265,18 @@ export function AppProvider({ children }) {
       navigateTo('admin-dashboard');
       showToast('Signed in as Vikramaditya Verma (Platform Administrator)');
       return true;
+    } else if (cleanEmail.includes('vedam')) {
+      setCurrentUser(INITIAL_VEDAM_INSTITUTION);
+      setActiveRole('employer');
+      navigateTo('employer-dashboard');
+      showToast('Signed in as Vedam School of Technology (Educational Institution)');
+      return true;
+    } else if (cleanEmail.includes('microsoft')) {
+      setCurrentUser(INITIAL_MICROSOFT_ORG);
+      setActiveRole('employer');
+      navigateTo('employer-dashboard');
+      showToast('Signed in as Microsoft (Corporate Organisation)');
+      return true;
     } else if (cleanEmail === 'employer@proofwork.demo' || (signupRole === 'employer' && !cleanEmail.includes('candidate'))) {
       setCurrentUser(INITIAL_EMPLOYER);
       setActiveRole('employer');
@@ -289,6 +303,18 @@ export function AppProvider({ children }) {
       setViewedProfileId('cand-001');
       navigateTo('admin-dashboard');
       showToast('Signed in as Platform Administrator');
+    } else if (role === 'vedam' || role === 'institution') {
+      setCurrentUser(INITIAL_VEDAM_INSTITUTION);
+      setActiveRole('employer');
+      setViewedProfileId('cand-001');
+      navigateTo('employer-dashboard');
+      showToast('Signed in as Dr. Rajesh Iyer (Vedam School of Technology - Educational Institution)');
+    } else if (role === 'microsoft' || role === 'corporate') {
+      setCurrentUser(INITIAL_MICROSOFT_ORG);
+      setActiveRole('employer');
+      setViewedProfileId('cand-001');
+      navigateTo('employer-dashboard');
+      showToast('Signed in as Satya Nadella (Microsoft - Corporate Organisation)');
     } else if (role === 'employer') {
       setCurrentUser(INITIAL_EMPLOYER);
       setActiveRole('employer');
@@ -495,6 +521,29 @@ export function AppProvider({ children }) {
     return true;
   };
 
+  const updateOrganizationType = (employerId, newType) => {
+    if (currentUser?.role !== ROLES.ADMIN) {
+      showToast('Unauthorized: Only administrators can configure organisation classification.', 'error');
+      return false;
+    }
+
+    setEmployersList((prev) =>
+      prev.map((emp) => {
+        if (emp.id === employerId) {
+          logAuditAction(
+            'UPDATED_ORGANIZATION_TYPE',
+            `${emp.company} (${emp.id})`,
+            `Organisation classification modified to ${newType === 'educational_institution' ? 'Educational Institution' : 'Corporate Organisation'}.`
+          );
+          showToast(`${emp.company} classification set to ${newType === 'educational_institution' ? 'Educational Institution' : 'Corporate'}`);
+          return { ...emp, organizationType: newType };
+        }
+        return emp;
+      })
+    );
+    return true;
+  };
+
   // Modal state for direct pinging/interviews
   const [interviewCandidate, setInterviewCandidate] = useState(null);
 
@@ -538,6 +587,7 @@ export function AppProvider({ children }) {
         logAuditAction,
         toggleCandidateStatus,
         verifyEmployerOrg,
+        updateOrganizationType,
         updateUserRole
       }}
     >

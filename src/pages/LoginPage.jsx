@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { ShieldCheck, Mail, Lock, ArrowRight, UserCheck, Briefcase, Sparkles, CheckCircle2, Linkedin, AlertCircle } from 'lucide-react';
+import { ShieldCheck, Mail, Lock, ArrowRight, UserCheck, Briefcase, Sparkles, CheckCircle2, Linkedin, AlertCircle, GraduationCap, Building2 } from 'lucide-react';
 
 export default function LoginPage() {
   const { loginAs, loginWithCredentials, showToast } = useApp();
@@ -70,7 +70,7 @@ export default function LoginPage() {
               </span>
             </div>
 
-            <div className="grid grid-cols-3 gap-2 text-left">
+            <div className="grid grid-cols-2 gap-2 text-left">
               <button
                 type="button"
                 onClick={() => handleRoleSelection('candidate')}
@@ -85,24 +85,49 @@ export default function LoginPage() {
                   <span>Candidate</span>
                 </div>
                 <div className="text-[10px] text-slate-400 truncate mt-0.5">candidate@proofwork.demo</div>
-                <div className="text-[10px] text-slate-500 font-mono">pw: demo123</div>
+                <div className="text-[10px] text-slate-500 font-mono">Rohan Sharma (IITB)</div>
               </button>
 
               <button
                 type="button"
-                onClick={() => handleRoleSelection('employer')}
+                onClick={() => {
+                  setSelectedRole('vedam');
+                  setEmail('admin@vedam.edu.in');
+                  setPassword('demo123');
+                }}
                 className={`p-2 rounded-xl border text-xs transition-all ${
-                  selectedRole === 'employer'
-                    ? 'bg-violet-600/25 border-violet-500 text-white shadow-glow-sm'
+                  selectedRole === 'vedam'
+                    ? 'bg-emerald-600/25 border-emerald-500 text-white shadow-glow-sm'
                     : 'bg-navy-950/80 border-slate-800 text-slate-300 hover:border-slate-700'
                 }`}
               >
-                <div className="font-bold text-violet-300 flex items-center gap-1">
-                  <Briefcase className="w-3.5 h-3.5" />
-                  <span>Employer</span>
+                <div className="font-bold text-emerald-300 flex items-center gap-1">
+                  <GraduationCap className="w-3.5 h-3.5" />
+                  <span>Vedam (Institution)</span>
                 </div>
-                <div className="text-[10px] text-slate-400 truncate mt-0.5">employer@proofwork.demo</div>
-                <div className="text-[10px] text-slate-500 font-mono">pw: demo123</div>
+                <div className="text-[10px] text-slate-400 truncate mt-0.5">admin@vedam.edu.in</div>
+                <div className="text-[10px] text-emerald-400 font-mono">Employees + Students</div>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setSelectedRole('microsoft');
+                  setEmail('careers@microsoft.demo');
+                  setPassword('demo123');
+                }}
+                className={`p-2 rounded-xl border text-xs transition-all ${
+                  selectedRole === 'microsoft'
+                    ? 'bg-sky-600/25 border-sky-500 text-white shadow-glow-sm'
+                    : 'bg-navy-950/80 border-slate-800 text-slate-300 hover:border-slate-700'
+                }`}
+              >
+                <div className="font-bold text-sky-300 flex items-center gap-1">
+                  <Building2 className="w-3.5 h-3.5" />
+                  <span>Microsoft (Corporate)</span>
+                </div>
+                <div className="text-[10px] text-slate-400 truncate mt-0.5">careers@microsoft.demo</div>
+                <div className="text-[10px] text-sky-400 font-mono">Employees Only</div>
               </button>
 
               <button
@@ -123,7 +148,7 @@ export default function LoginPage() {
                   <span>Admin</span>
                 </div>
                 <div className="text-[10px] text-slate-400 truncate mt-0.5">admin@proofwork.demo</div>
-                <div className="text-[10px] text-slate-500 font-mono">pw: demo123</div>
+                <div className="text-[10px] text-slate-500 font-mono">Platform Governance</div>
               </button>
             </div>
           </div>

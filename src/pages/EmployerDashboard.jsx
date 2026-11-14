@@ -23,12 +23,20 @@ import {
   Building,
   Briefcase,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  GraduationCap,
+  Medal,
+  Star,
+  PieChart,
+  Code2,
+  FileCode
 } from 'lucide-react';
 import SkillCategoriesGrid from '../components/SkillCategoriesGrid';
+import { canViewInstitutionStudents, canViewOrganizationEmployees, ORGANIZATION_TYPES } from '../utils/rbac';
 
 export default function EmployerDashboard() {
   const {
+    currentUser,
     candidates,
     challenges,
     savedCandidateIds,
@@ -38,8 +46,17 @@ export default function EmployerDashboard() {
     showToast
   } = useApp();
 
-  const [activeTab, setActiveTab] = useState('discovery'); // 'discovery' | 'shortlisted'
+  const [activeTab, setActiveTab] = useState('discovery'); // 'discovery' | 'shortlisted' | 'employees' | 'students'
   const [expandedSkillsCandidateId, setExpandedSkillsCandidateId] = useState(null);
+  const [employeeSearchQuery, setEmployeeSearchQuery] = useState('');
+  const [departmentFilter, setDepartmentFilter] = useState('All');
+  const [studentSearchQuery, setStudentSearchQuery] = useState('');
+
+  // Organization identity and type classification
+  const organization = currentUser || {};
+  const isEducationalInstitution = canViewInstitutionStudents(currentUser);
+  const orgType = organization.organizationType || ORGANIZATION_TYPES.CORPORATE;
+  const institutionId = organization.institutionId || (isEducationalInstitution ? 'inst-vedam-01' : null);
 
   // Search & Filter state specifically for CS and Software Engineering:
   // - Programming language
@@ -124,8 +141,8 @@ export default function EmployerDashboard() {
           <div className="flex items-center gap-5">
             <div className="relative shrink-0">
               <img
-                src="https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&q=80&w=140"
-                alt="Nexora Technologies"
+                src={organization.companyLogo || "https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&q=80&w=140"}
+                alt={organization.company || "Organization"}
                 className="w-16 h-16 sm:w-20 sm:h-20 rounded-2xl object-cover border-2 border-slate-700 shadow-md"
               />
               <div className="absolute -bottom-1 -right-1 p-1 bg-violet-600 rounded-lg text-white">
@@ -136,31 +153,37 @@ export default function EmployerDashboard() {
             <div className="space-y-1">
               <div className="flex flex-wrap items-center gap-2.5">
                 <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight">
-                  Nexora Technologies
+                  {organization.company || "Nexora Technologies"}
                 </h1>
-                <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-violet-500/20 text-violet-300 border border-violet-500/30">
-                  Verified Employer Organization
+                <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${
+                  isEducationalInstitution
+                    ? 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                    : 'bg-violet-500/20 text-violet-300 border border-violet-500/30'
+                }`}>
+                  {isEducationalInstitution ? 'Educational Institution' : 'Corporate Organization'}
                 </span>
               </div>
               <p className="text-xs sm:text-sm text-slate-300 font-medium">
-                Pooja Kulkarni • Engineering Director & Campus Hiring Lead • Bengaluru, Karnataka
+                {organization.name || "Pooja Kulkarni"} • {organization.title || "Director"} • {organization.location || "Bengaluru, Karnataka"}
               </p>
               <div className="flex flex-wrap items-center gap-3 text-xs text-slate-400 pt-1">
                 <span className="flex items-center gap-1">
                   <Building className="w-3.5 h-3.5 text-slate-500" />
-                  FinTech & Distributed Cloud Infrastructure (India)
+                  {organization.industry || "FinTech & Distributed Cloud Infrastructure (India)"}
                 </span>
                 <span>•</span>
-                <span className="text-emerald-400 font-medium">3 Active Engineering Headcounts</span>
+                <span className="text-emerald-400 font-medium">
+                  {isEducationalInstitution ? `${organization.totalStudentsRegistered || 130} Registered Students` : `${organization.openRoles?.length || 3} Active Engineering Headcounts`}
+                </span>
               </div>
             </div>
           </div>
 
-          {/* Quick Employer Actions */}
-          <div className="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
+          {/* Organization Dashboard Navigation Tabs */}
+          <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
             <button
               onClick={() => setActiveTab('discovery')}
-              className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
                 activeTab === 'discovery'
                   ? 'bg-brand-600 text-white shadow-glow'
                   : 'bg-navy-900 text-slate-300 hover:text-white border border-slate-800'
@@ -172,7 +195,7 @@ export default function EmployerDashboard() {
 
             <button
               onClick={() => setActiveTab('shortlisted')}
-              className={`px-4 py-2.5 rounded-xl text-xs font-semibold transition-all flex items-center gap-2 ${
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
                 activeTab === 'shortlisted'
                   ? 'bg-violet-600 text-white shadow-glow'
                   : 'bg-navy-900 text-slate-300 hover:text-white border border-slate-800'
@@ -181,6 +204,34 @@ export default function EmployerDashboard() {
               <BookmarkCheck className="w-3.5 h-3.5 text-violet-400" />
               <span>Shortlisted ({shortlistedCount})</span>
             </button>
+
+            {/* Employees Section - available to ALL organizations */}
+            <button
+              onClick={() => setActiveTab('employees')}
+              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                activeTab === 'employees'
+                  ? 'bg-indigo-600 text-white shadow-glow'
+                  : 'bg-navy-900 text-slate-300 hover:text-white border border-slate-800'
+              }`}
+            >
+              <Briefcase className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Employees</span>
+            </button>
+
+            {/* Students Section - EXCLUSIVELY rendered for Educational Institutions */}
+            {isEducationalInstitution && (
+              <button
+                onClick={() => setActiveTab('students')}
+                className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                  activeTab === 'students'
+                    ? 'bg-emerald-600 text-white shadow-glow'
+                    : 'bg-navy-900 text-slate-300 hover:text-white border border-slate-800'
+                }`}
+              >
+                <GraduationCap className="w-3.5 h-3.5 text-emerald-400" />
+                <span>Students</span>
+              </button>
+            )}
           </div>
         </div>
 
@@ -696,6 +747,350 @@ export default function EmployerDashboard() {
               ))}
             </div>
           )}
+
+        </div>
+      )}
+
+      {/* =========================================================================
+          6. EMPLOYEES SECTION (Available to ALL Organizations)
+          ========================================================================= */}
+      {activeTab === 'employees' && (
+        <div className="space-y-6 animate-fadeIn">
+          
+          {/* Header & Overview */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <h2 className="text-xl font-bold text-white flex items-center gap-2">
+                <Briefcase className="w-5 h-5 text-indigo-400" />
+                Workforce Overview & Employee Directory
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Organizational workforce distribution across engineering, product, management, and operations teams.
+              </p>
+            </div>
+            <div className="px-3.5 py-1.5 rounded-xl bg-navy-950 border border-slate-800 text-xs font-mono text-slate-300">
+              Total Workforce: <span className="font-bold text-indigo-400">{organization.totalEmployees || (organization.employees?.length || 22)}</span> Members
+            </div>
+          </div>
+
+          {/* Department-wise Distribution Summary Table & Cards */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+            {(organization.departmentBreakdown || [
+              { department: 'Backend Development', count: 5, lead: 'Pooja Kulkarni' },
+              { department: 'Frontend Development', count: 5, lead: 'Vikram Joshi' },
+              { department: 'Human Resources', count: 2, lead: 'Shreya Kapoor' },
+              { department: 'Marketing', count: 5, lead: 'Naveen Rao' },
+              { department: 'Management', count: 4, lead: 'Rishi Nambiar' },
+              { department: 'Finance / CFO', count: 1, lead: 'Sangeeta Iyer' }
+            ]).map((dept) => (
+              <div
+                key={dept.department}
+                className="p-3.5 rounded-2xl bg-navy-950/80 border border-slate-800 hover:border-slate-700 transition-all space-y-1"
+              >
+                <span className="text-[10px] uppercase font-mono text-slate-400 block truncate" title={dept.department}>
+                  {dept.department}
+                </span>
+                <div className="text-xl font-bold font-mono text-white">
+                  {dept.count}
+                </div>
+                <div className="text-[10px] text-slate-500 truncate" title={`Lead: ${dept.lead}`}>
+                  Lead: {dept.lead}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Search & Department Filter Bar */}
+          <div className="glass-panel p-4 rounded-2xl border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <div className="relative w-full sm:w-80">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                value={employeeSearchQuery}
+                onChange={(e) => setEmployeeSearchQuery(e.target.value)}
+                placeholder="Search employees by name, designation, department..."
+                className="w-full bg-navy-950 border border-slate-750 rounded-xl pl-9 pr-3 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-indigo-500"
+              />
+            </div>
+
+            <div className="flex items-center gap-2 w-full sm:w-auto">
+              <label className="text-[11px] text-slate-400 whitespace-nowrap">Filter Dept:</label>
+              <select
+                value={departmentFilter}
+                onChange={(e) => setDepartmentFilter(e.target.value)}
+                className="bg-navy-950 border border-slate-800 text-slate-200 text-xs rounded-xl px-3 py-2 focus:outline-none focus:border-indigo-500"
+              >
+                <option value="All">All Departments</option>
+                <option value="Backend Development">Backend Development</option>
+                <option value="Frontend Development">Frontend Development</option>
+                <option value="Human Resources">Human Resources</option>
+                <option value="Marketing">Marketing</option>
+                <option value="Management">Management</option>
+                <option value="Finance / CFO">Finance / CFO</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Employee Directory List */}
+          <div className="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="text-[10px] text-slate-400 uppercase font-mono border-b border-slate-800 bg-navy-950/60">
+                  <tr>
+                    <th className="p-3">Employee</th>
+                    <th className="p-3">Department</th>
+                    <th className="p-3">Designation</th>
+                    <th className="p-3">Email</th>
+                    <th className="p-3 text-right">Tenure</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/60 font-medium">
+                  {(organization.employees || [
+                    { id: 'emp-1', name: 'Pooja Kulkarni', department: 'Backend Development', designation: 'Engineering Director', email: 'pooja.k@nexora.mock', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200', joined: '2023' },
+                    { id: 'emp-2', name: 'Siddharth Roy', department: 'Backend Development', designation: 'Staff SDE - Concurrency', email: 'siddharth@nexora.mock', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200', joined: '2024' },
+                    { id: 'emp-3', name: 'Vikram Joshi', department: 'Frontend Development', designation: 'Lead UI Architect', email: 'vikram.j@nexora.mock', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200', joined: '2023' },
+                    { id: 'emp-4', name: 'Divya Shenoy', department: 'Frontend Development', designation: 'Senior React Developer', email: 'divya@nexora.mock', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200', joined: '2024' },
+                    { id: 'emp-5', name: 'Shreya Kapoor', department: 'Human Resources', designation: 'Head of People & Campus', email: 'shreya@nexora.mock', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200', joined: '2023' },
+                    { id: 'emp-6', name: 'Naveen Rao', department: 'Marketing', designation: 'Growth & Brand Director', email: 'naveen@nexora.mock', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=200', joined: '2024' },
+                    { id: 'emp-7', name: 'Rishi Nambiar', department: 'Management', designation: 'Chief Operating Officer', email: 'rishi@nexora.mock', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=200', joined: '2022' },
+                    { id: 'emp-8', name: 'Sangeeta Iyer', department: 'Finance / CFO', designation: 'VP Finance', email: 'sangeeta@nexora.mock', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200', joined: '2023' }
+                  ])
+                    .filter((e) => {
+                      if (departmentFilter !== 'All' && e.department !== departmentFilter) return false;
+                      if (!employeeSearchQuery.trim()) return true;
+                      const q = employeeSearchQuery.toLowerCase();
+                      return e.name.toLowerCase().includes(q) || e.designation.toLowerCase().includes(q) || e.department.toLowerCase().includes(q);
+                    })
+                    .map((emp) => (
+                      <tr key={emp.id} className="hover:bg-slate-800/30 transition-colors">
+                        <td className="p-3 flex items-center gap-3">
+                          <Avatar src={emp.avatar} name={emp.name} className="w-8 h-8 rounded-xl border border-slate-700" />
+                          <div>
+                            <div className="font-bold text-white">{emp.name}</div>
+                            <div className="text-[10px] text-slate-500 font-mono">{emp.id}</div>
+                          </div>
+                        </td>
+                        <td className="p-3">
+                          <span className="px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-slate-800 text-slate-300 border border-slate-700">
+                            {emp.department}
+                          </span>
+                        </td>
+                        <td className="p-3 text-slate-200">{emp.designation}</td>
+                        <td className="p-3 text-slate-400 font-mono">{emp.email}</td>
+                        <td className="p-3 text-right text-slate-400 font-mono">Since {emp.joined}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+      )}
+
+      {/* =========================================================================
+          7. STUDENTS SECTION (Educational Institutions ONLY)
+          ========================================================================= */}
+      {activeTab === 'students' && isEducationalInstitution && (
+        <div className="space-y-6 animate-fadeIn">
+          
+          {/* Header & Prominent Counter */}
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-800 pb-5">
+            <div>
+              <div className="flex items-center gap-2">
+                <span className="px-2.5 py-0.5 rounded-full text-xs font-mono font-bold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 flex items-center gap-1.5">
+                  <GraduationCap className="w-3.5 h-3.5 text-emerald-400" />
+                  <span>Verified Educational Institution Portal</span>
+                </span>
+                <span className="text-xs text-slate-400 font-mono">
+                  Institution ID: {institutionId}
+                </span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-extrabold text-white tracking-tight mt-1">
+                {organization.company} — Student Engineering Cohort
+              </h2>
+              <p className="text-xs text-slate-400 mt-0.5">
+                Track campus performance, proven algorithmic ratings, verified project submissions and hackathon honors.
+              </p>
+            </div>
+
+            {/* Prominent Total Student Count Pill */}
+            <div className="p-4 rounded-2xl bg-gradient-to-r from-emerald-950/40 via-navy-950 to-navy-950 border border-emerald-500/30 text-right shrink-0">
+              <span className="text-[10px] font-mono uppercase text-slate-400 block tracking-wider">
+                Total Registered Students
+              </span>
+              <div className="text-3xl font-extrabold font-mono text-emerald-400">
+                {organization.totalStudentsRegistered || 130}
+              </div>
+              <span className="text-[10px] text-slate-400">Active on Proof of Work</span>
+            </div>
+          </div>
+
+          {/* Top 5 Students Section (Ranked Transparently by PoW Verified Benchmarks) */}
+          <div className="glass-panel p-6 sm:p-7 rounded-3xl border border-slate-800 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800 pb-3">
+              <div>
+                <h3 className="text-base font-bold text-white flex items-center gap-2">
+                  <Trophy className="w-5 h-5 text-amber-400" />
+                  Top 5 Students — Demonstrated Technical Ability
+                </h3>
+                <p className="text-xs text-slate-400">
+                  Ranked transparently by verified test passes, AST audits, LeetCode / Codeforces scores and hackathon achievements.
+                </p>
+              </div>
+              <span className="text-[11px] font-mono text-amber-300 bg-amber-500/10 px-2.5 py-1 rounded-lg border border-amber-500/20 self-start sm:self-auto">
+                ● Top 5 High-Craft Performers
+              </span>
+            </div>
+
+            {/* Top 5 Student Cards */}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3.5">
+              {candidates
+                .filter((cand) => cand.institutionId === institutionId || cand.education?.includes(organization.company))
+                .sort((a, b) => (b.powScore || 0) - (a.powScore || 0))
+                .slice(0, 5)
+                .map((student, rankIdx) => (
+                  <div
+                    key={student.id}
+                    onClick={() => navigateTo('profile', student.id)}
+                    className="p-4 rounded-2xl bg-navy-950/90 border border-slate-800 hover:border-brand-500/40 cursor-pointer transition-all glass-panel-hover flex flex-col justify-between space-y-3 group"
+                  >
+                    <div className="space-y-2.5">
+                      <div className="flex items-center justify-between">
+                        <span className={`w-6 h-6 rounded-lg font-mono text-xs font-bold flex items-center justify-center border ${
+                          rankIdx === 0
+                            ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
+                            : rankIdx === 1
+                            ? 'bg-slate-300/20 text-slate-200 border-slate-400/40'
+                            : rankIdx === 2
+                            ? 'bg-amber-700/20 text-amber-500 border-amber-700/40'
+                            : 'bg-navy-900 text-slate-400 border-slate-800'
+                        }`}>
+                          #{rankIdx + 1}
+                        </span>
+                        <span className="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20 font-bold">
+                          PoW: {student.powScore}
+                        </span>
+                      </div>
+
+                      <div className="flex items-center gap-2.5">
+                        <Avatar src={student.avatar} name={student.name} className="w-10 h-10 rounded-xl border border-slate-700" />
+                        <div className="min-w-0">
+                          <h4 className="font-bold text-white text-xs group-hover:text-brand-300 transition-colors truncate">
+                            {student.name}
+                          </h4>
+                          <span className="text-[10px] text-slate-400 font-mono block">
+                            Batch {student.graduationYear}
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="space-y-1 text-[11px] text-slate-300 pt-1 border-t border-slate-850">
+                        <div className="flex items-center justify-between text-[10px] text-slate-400">
+                          <span>LeetCode Rating:</span>
+                          <span className="font-mono font-bold text-brand-300">{student.codingStats?.leetcodeRating || '1800+'}</span>
+                        </div>
+                        <div className="flex items-center justify-between text-[10px] text-slate-400">
+                          <span>Verified Code Proof:</span>
+                          <span className="font-mono font-bold text-white">{student.verifiedProjectsCount} Repos</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    <button className="w-full py-1.5 rounded-lg bg-slate-800 group-hover:bg-brand-600 text-[11px] font-semibold text-slate-200 group-hover:text-white transition-colors flex items-center justify-center gap-1">
+                      <span>View Portfolio</span>
+                      <ExternalLink className="w-3 h-3" />
+                    </button>
+                  </div>
+                ))}
+            </div>
+          </div>
+
+          {/* Complete Institutional Student Directory */}
+          <div className="glass-panel p-6 rounded-3xl border border-slate-800 space-y-4">
+            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <h3 className="text-base font-bold text-white">Full Institution Student Directory</h3>
+                <p className="text-xs text-slate-400">Enrolled engineering undergraduates sharing verified capability proofs</p>
+              </div>
+
+              <div className="relative w-full sm:w-72">
+                <Search className="w-3.5 h-3.5 text-slate-500 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  placeholder="Filter students by name, batch, skills..."
+                  value={studentSearchQuery}
+                  onChange={(e) => setStudentSearchQuery(e.target.value)}
+                  className="w-full bg-navy-950 border border-slate-800 rounded-xl pl-9 pr-3 py-1.5 text-xs text-white focus:outline-none focus:border-emerald-500"
+                />
+              </div>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="w-full text-left text-xs">
+                <thead className="text-[10px] text-slate-400 uppercase font-mono border-b border-slate-800 bg-navy-950/60">
+                  <tr>
+                    <th className="p-3">Student Name</th>
+                    <th className="p-3">Degree & Batch</th>
+                    <th className="p-3">PoW Score</th>
+                    <th className="p-3">Key Verified Skills</th>
+                    <th className="p-3">Coding Platform Stats</th>
+                    <th className="p-3 text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-800/60 font-medium">
+                  {candidates
+                    .filter((c) => c.institutionId === institutionId || c.education?.includes(organization.company))
+                    .filter((c) => {
+                      if (!studentSearchQuery.trim()) return true;
+                      const q = studentSearchQuery.toLowerCase();
+                      return c.name.toLowerCase().includes(q) || c.skills.some(s => s.toLowerCase().includes(q));
+                    })
+                    .map((student) => (
+                      <tr key={student.id} className="hover:bg-slate-800/30 transition-colors">
+                        <td className="p-3 flex items-center gap-3">
+                          <Avatar src={student.avatar} name={student.name} className="w-8 h-8 rounded-xl border border-slate-700" />
+                          <div>
+                            <div className="font-bold text-white hover:text-brand-300 cursor-pointer" onClick={() => navigateTo('profile', student.id)}>
+                              {student.name}
+                            </div>
+                            <div className="text-[10px] text-slate-500 font-mono">ID: {student.id}</div>
+                          </div>
+                        </td>
+                        <td className="p-3 text-slate-300">
+                          <div>{student.degree}</div>
+                          <span className="text-[10px] font-mono text-emerald-400">Class of {student.graduationYear}</span>
+                        </td>
+                        <td className="p-3 font-mono font-bold text-emerald-400">
+                          {student.powScore} / 1000
+                        </td>
+                        <td className="p-3">
+                          <div className="flex flex-wrap gap-1 max-w-xs">
+                            {student.skills.slice(0, 3).map((sk) => (
+                              <span key={sk} className="text-[10px] px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-mono">
+                                {sk}
+                              </span>
+                            ))}
+                          </div>
+                        </td>
+                        <td className="p-3 font-mono text-slate-300 text-[11px]">
+                          LC: <span className="font-bold text-brand-300">{student.codingStats?.leetcodeSolved || 400}</span> • CF: <span className="font-bold text-violet-300">{student.codingStats?.codeforcesRank || 'Specialist'}</span>
+                        </td>
+                        <td className="p-3 text-right">
+                          <button
+                            onClick={() => navigateTo('profile', student.id)}
+                            className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold transition-colors inline-flex items-center gap-1"
+                          >
+                            <span>Inspect Proof</span>
+                            <ArrowRight className="w-3 h-3 text-brand-400" />
+                          </button>
+                        </td>
+                      </tr>
+                    ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
 
         </div>
       )}

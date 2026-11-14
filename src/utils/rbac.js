@@ -7,6 +7,11 @@ export const ROLES = {
   ADMIN: 'admin'
 };
 
+export const ORGANIZATION_TYPES = {
+  EDUCATIONAL_INSTITUTION: 'educational_institution',
+  CORPORATE: 'corporate'
+};
+
 export const PERMISSIONS = {
   // Candidate Domain
   ACCESS_CANDIDATE_DASHBOARD: 'candidate:dashboard:access',
@@ -28,6 +33,8 @@ export const PERMISSIONS = {
   MANAGE_RECRUITER_NOTES: 'employer:notes:manage',
   MANAGE_HIRING_PIPELINE: 'employer:pipeline:manage',
   SEND_INTERVIEW_INVITES: 'employer:interviews:send',
+  VIEW_ORGANIZATION_EMPLOYEES: 'org:employees:view',
+  VIEW_INSTITUTION_STUDENTS: 'org:students:view', // Educational Institutions & Admins only
 
   // Admin Domain
   ACCESS_ADMIN_DASHBOARD: 'admin:dashboard:access',
@@ -36,6 +43,7 @@ export const PERMISSIONS = {
   MANAGE_EMPLOYER_ACCOUNTS: 'admin:users:employers:manage',
   APPROVE_SUSPEND_USERS: 'admin:users:status:modify',
   ASSIGN_USER_ROLES: 'admin:roles:assign',
+  CONFIGURE_ORGANIZATION_TYPE: 'admin:org_type:configure',
   VERIFY_ORGANIZATIONS: 'admin:organizations:verify',
   MODERATE_REVIEWS_AND_CONTENT: 'admin:content:moderate',
   MANAGE_HACKATHONS_CATALOG: 'admin:hackathons:manage',
@@ -68,6 +76,7 @@ export const ROLE_PERMISSIONS = {
     PERMISSIONS.MANAGE_RECRUITER_NOTES,
     PERMISSIONS.MANAGE_HIRING_PIPELINE,
     PERMISSIONS.SEND_INTERVIEW_INVITES,
+    PERMISSIONS.VIEW_ORGANIZATION_EMPLOYEES,
     PERMISSIONS.DISCOVER_HACKATHONS // Employers can inspect hackathon ecosystems
   ],
 
@@ -79,12 +88,15 @@ export const ROLE_PERMISSIONS = {
     PERMISSIONS.MANAGE_EMPLOYER_ACCOUNTS,
     PERMISSIONS.APPROVE_SUSPEND_USERS,
     PERMISSIONS.ASSIGN_USER_ROLES,
+    PERMISSIONS.CONFIGURE_ORGANIZATION_TYPE,
     PERMISSIONS.VERIFY_ORGANIZATIONS,
     PERMISSIONS.MODERATE_REVIEWS_AND_CONTENT,
     PERMISSIONS.MANAGE_HACKATHONS_CATALOG,
     PERMISSIONS.MANAGE_CHALLENGES_CATALOG,
     PERMISSIONS.VIEW_AUDIT_LOGS,
     PERMISSIONS.MANAGE_PLATFORM_SETTINGS,
+    PERMISSIONS.VIEW_ORGANIZATION_EMPLOYEES,
+    PERMISSIONS.VIEW_INSTITUTION_STUDENTS,
     // Read-only oversight into user-facing directories
     PERMISSIONS.VIEW_CANDIDATE_PROFILES,
     PERMISSIONS.ACCESS_TALENT_DISCOVERY,
@@ -200,16 +212,27 @@ export function canModifyCandidateData(user, candidateId) {
 }
 
 /**
- * Check if an employer user can modify an employer resource.
+ * Check if a user has access to institution-only student management.
+ * Strictly permitted for educational institutions and platform administrators.
+ * Never granted to corporate employers.
  */
-export function canModifyEmployerData(user, employerId) {
+export function canViewInstitutionStudents(user) {
   if (!user) return false;
-  if (user.role === ROLES.EMPLOYER) {
-    return user.id === employerId;
-  }
-  if (user.role === ROLES.ADMIN) {
+  if (user.role === ROLES.ADMIN) return true;
+  if (user.role === ROLES.EMPLOYER && user.organizationType === ORGANIZATION_TYPES.EDUCATIONAL_INSTITUTION) {
     return true;
   }
   return false;
 }
+
+/**
+ * Check if an organization has access to employee workforce management.
+ * Permitted for all verified employers (corporate and educational) and administrators.
+ */
+export function canViewOrganizationEmployees(user) {
+  if (!user) return false;
+  if (user.role === ROLES.ADMIN || user.role === ROLES.EMPLOYER) return true;
+  return false;
+}
+
 

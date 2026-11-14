@@ -16,7 +16,8 @@ export const INITIAL_USER = {
   
   // 1. Academic Details
   education: {
-    institution: 'IIT Bombay',
+    institutionId: 'inst-vedam-01',
+    institution: 'Vedam School of Technology',
     degree: 'B.Tech Computer Science and Engineering',
     graduationYear: 2026,
     currentYear: '4th Year (Final Year)',
@@ -220,6 +221,7 @@ export const INITIAL_USER = {
 export const INITIAL_EMPLOYER = {
   id: 'emp-101',
   role: 'employer',
+  organizationType: 'corporate', // 'corporate' | 'educational_institution'
   company: 'Nexora Technologies',
   name: 'Pooja Kulkarni',
   title: 'Engineering Director & Campus Hiring Lead',
@@ -228,12 +230,97 @@ export const INITIAL_EMPLOYER = {
   website: 'https://nexora.mock',
   industry: 'FinTech & Cloud Infrastructure (India)',
   location: 'Bengaluru, Karnataka',
+  totalEmployees: 22,
+  departmentBreakdown: [
+    { department: 'Backend Development', count: 5, lead: 'Pooja Kulkarni' },
+    { department: 'Frontend Development', count: 5, lead: 'Vikram Joshi' },
+    { department: 'Human Resources', count: 2, lead: 'Shreya Kapoor' },
+    { department: 'Marketing', count: 5, lead: 'Naveen Rao' },
+    { department: 'Management', count: 4, lead: 'Rishi Nambiar' },
+    { department: 'Finance / CFO', count: 1, lead: 'Sangeeta Iyer' }
+  ],
+  employees: [
+    { id: 'emp-nex-1', name: 'Pooja Kulkarni', department: 'Backend Development', designation: 'Engineering Director', email: 'pooja.k@nexora.mock', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200', joined: '2023' },
+    { id: 'emp-nex-2', name: 'Siddharth Roy', department: 'Backend Development', designation: 'Staff SDE - Concurrency', email: 'siddharth@nexora.mock', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200', joined: '2024' },
+    { id: 'emp-nex-3', name: 'Vikram Joshi', department: 'Frontend Development', designation: 'Lead UI Architect', email: 'vikram.j@nexora.mock', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200', joined: '2023' },
+    { id: 'emp-nex-4', name: 'Divya Shenoy', department: 'Frontend Development', designation: 'Senior React Developer', email: 'divya@nexora.mock', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200', joined: '2024' },
+    { id: 'emp-nex-5', name: 'Shreya Kapoor', department: 'Human Resources', designation: 'Head of People & Campus', email: 'shreya@nexora.mock', avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=200', joined: '2023' },
+    { id: 'emp-nex-6', name: 'Naveen Rao', department: 'Marketing', designation: 'Growth & Brand Director', email: 'naveen@nexora.mock', avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=200', joined: '2024' },
+    { id: 'emp-nex-7', name: 'Rishi Nambiar', department: 'Management', designation: 'Chief Operating Officer', email: 'rishi@nexora.mock', avatar: 'https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?auto=format&fit=crop&q=80&w=200', joined: '2022' },
+    { id: 'emp-nex-8', name: 'Sangeeta Iyer', department: 'Finance / CFO', designation: 'VP Finance', email: 'sangeeta@nexora.mock', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200', joined: '2023' }
+  ],
   openRoles: [
     { id: 'role-1', title: 'Software Development Engineer Intern (SDE Intern)', salary: '₹60,000 / month stipend', location: 'Bengaluru / Hybrid', applicantsCount: 48, tags: ['Java', 'Spring Boot', 'SQL'] },
     { id: 'role-2', title: 'Graduate Engineer Trainee (GET - 2026 Batch)', salary: '₹14 - 18 LPA', location: 'Bengaluru / Pune', applicantsCount: 36, tags: ['React', 'TypeScript', 'Node.js'] },
     { id: 'role-3', title: 'Associate Software Engineer (Backend)', salary: '₹16 - 22 LPA', location: 'Hyderabad, Telangana', applicantsCount: 22, tags: ['Python', 'PostgreSQL', 'Docker'] }
   ],
   savedCandidates: ['cand-001', 'cand-002', 'cand-004']
+};
+
+export const INITIAL_VEDAM_INSTITUTION = {
+  id: 'emp-vedam-01',
+  role: 'employer',
+  organizationType: 'educational_institution', // 'educational_institution'
+  institutionId: 'inst-vedam-01',
+  company: 'Vedam School of Technology',
+  name: 'Dr. Anand Ramanathan',
+  title: 'Dean of Engineering & Placement Director',
+  avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300',
+  companyLogo: 'https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&q=80&w=120',
+  website: 'https://vedam.tech',
+  industry: 'Higher Technical Education & Engineering',
+  location: 'Bengaluru, Karnataka',
+  totalStudentsRegistered: 130,
+  departmentBreakdown: [
+    { department: 'Faculty of Computer Science', count: 18, lead: 'Dr. Ramanathan' },
+    { department: 'Systems & Cloud Lab', count: 8, lead: 'Prof. Meenakshi Sundaram' },
+    { department: 'AI & Machine Learning Research', count: 10, lead: 'Dr. Alok Sen' },
+    { department: 'Career Services & Industry Relations', count: 6, lead: 'Priya Chawla' },
+    { department: 'Academic Administration', count: 5, lead: 'Col. K.S. Rathore' }
+  ],
+  employees: [
+    { id: 'emp-vdm-1', name: 'Dr. Anand Ramanathan', department: 'Academic Leadership', designation: 'Dean of Computing', email: 'anand.r@vedam.tech', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=200', joined: '2021' },
+    { id: 'emp-vdm-2', name: 'Prof. Meenakshi Sundaram', department: 'Systems & Cloud Lab', designation: 'Professor of Distributed Systems', email: 'meenakshi@vedam.tech', avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200', joined: '2022' },
+    { id: 'emp-vdm-3', name: 'Dr. Alok Sen', department: 'AI & Machine Learning Research', designation: 'Chair of Machine Intelligence', email: 'alok.sen@vedam.tech', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=200', joined: '2023' },
+    { id: 'emp-vdm-4', name: 'Priya Chawla', department: 'Career Services & Industry Relations', designation: 'Head of Technical Placements', email: 'priya.chawla@vedam.tech', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200', joined: '2022' }
+  ],
+  openRoles: [
+    { id: 'role-vdm-1', title: 'Vedam Engineering Fellowship - Systems Track (Class of 2026)', salary: 'Sponsored Tuition + ₹50,000 Stipend', location: 'Bengaluru Campus', applicantsCount: 130, tags: ['Systems', 'Java', 'Algorithms'] }
+  ],
+  savedCandidates: ['cand-001', 'cand-003', 'cand-009']
+};
+
+export const INITIAL_MICROSOFT_ORG = {
+  id: 'emp-microsoft-01',
+  role: 'employer',
+  organizationType: 'corporate', // 'corporate'
+  company: 'Microsoft India',
+  name: 'Kavita Chidambaram',
+  title: 'Principal Technical Recruiter - Azure Core',
+  avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=300',
+  companyLogo: 'https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&q=80&w=120',
+  website: 'https://careers.microsoft.com',
+  industry: 'Enterprise Cloud, Operating Systems & AI',
+  location: 'Hyderabad / Bengaluru, India',
+  totalEmployees: 48,
+  departmentBreakdown: [
+    { department: 'Backend Development', count: 18, lead: 'Rajesh Gokhale' },
+    { department: 'Frontend Development', count: 12, lead: 'Neha Tandon' },
+    { department: 'Human Resources', count: 5, lead: 'Kavita Chidambaram' },
+    { department: 'Marketing', count: 6, lead: 'Amitav Ghosh' },
+    { department: 'Management', count: 5, lead: 'Satya N.' },
+    { department: 'Finance / CFO', count: 2, lead: 'Geeta Menon' }
+  ],
+  employees: [
+    { id: 'emp-msft-1', name: 'Kavita Chidambaram', department: 'Human Resources', designation: 'Principal Recruiter', email: 'kavita@microsoft.mock', avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=200', joined: '2020' },
+    { id: 'emp-msft-2', name: 'Rajesh Gokhale', department: 'Backend Development', designation: 'Partner Architect - Azure', email: 'rajesh.g@microsoft.mock', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=200', joined: '2019' },
+    { id: 'emp-msft-3', name: 'Neha Tandon', department: 'Frontend Development', designation: 'Principal Design System Lead', email: 'neha.t@microsoft.mock', avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200', joined: '2021' }
+  ],
+  openRoles: [
+    { id: 'role-ms-1', title: 'Software Engineer II - Azure Compute (Distributed Systems)', salary: '₹34 - 45 LPA', location: 'Hyderabad, Telangana', applicantsCount: 84, tags: ['C++', 'Rust', 'Cloud'] },
+    { id: 'role-ms-2', title: 'Full Stack Engineer - Microsoft 365 Core', salary: '₹28 - 36 LPA', location: 'Bengaluru, Karnataka', applicantsCount: 62, tags: ['TypeScript', 'React', 'Node.js'] }
+  ],
+  savedCandidates: ['cand-001', 'cand-003']
 };
 
 export const INITIAL_ADMIN = {
@@ -255,14 +342,67 @@ export const INITIAL_EMPLOYERS_LIST = [
     name: 'Pooja Kulkarni',
     email: 'employer@proofwork.demo',
     role: 'employer',
+    organizationType: 'corporate', // 'corporate'
     title: 'Engineering Director & Campus Hiring Lead',
     avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300',
     location: 'Bengaluru, Karnataka',
     industry: 'FinTech & Cloud Infrastructure',
     verificationStatus: 'Verified Enterprise',
     accountStatus: 'Active',
-    membersCount: 8,
+    membersCount: 22,
     activeListingsCount: 3
+  },
+  {
+    id: 'emp-vedam-01',
+    company: 'Vedam School of Technology',
+    name: 'Dr. Anand Ramanathan',
+    email: 'vedam@proofwork.demo',
+    role: 'employer',
+    organizationType: 'educational_institution', // 'educational_institution'
+    institutionId: 'inst-vedam-01',
+    title: 'Dean of Engineering & Placement Director',
+    avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&q=80&w=300',
+    location: 'Bengaluru, Karnataka',
+    industry: 'Higher Technical Education & Engineering',
+    verificationStatus: 'Verified Educational Institution',
+    accountStatus: 'Active',
+    membersCount: 47,
+    activeListingsCount: 1,
+    totalStudents: 130
+  },
+  {
+    id: 'emp-microsoft-01',
+    company: 'Microsoft India',
+    name: 'Kavita Chidambaram',
+    email: 'microsoft@proofwork.demo',
+    role: 'employer',
+    organizationType: 'corporate', // 'corporate'
+    title: 'Principal Technical Recruiter - Azure Core',
+    avatar: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=300',
+    location: 'Hyderabad / Bengaluru, India',
+    industry: 'Enterprise Cloud, Operating Systems & AI',
+    verificationStatus: 'Verified Enterprise',
+    accountStatus: 'Active',
+    membersCount: 48,
+    activeListingsCount: 2
+  },
+  {
+    id: 'emp-adypu-01',
+    company: 'Ajeenkya DY Patil University (ADYPU)',
+    name: 'Prof. Suresh Kulkarni',
+    email: 'adypu@proofwork.demo',
+    role: 'employer',
+    organizationType: 'educational_institution', // 'educational_institution'
+    institutionId: 'inst-adypu-01',
+    title: 'Director of Industry Engagements & Placement Cell',
+    avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300',
+    location: 'Pune, Maharashtra',
+    industry: 'Innovation & Engineering University',
+    verificationStatus: 'Verified Educational Institution',
+    accountStatus: 'Active',
+    membersCount: 38,
+    activeListingsCount: 1,
+    totalStudents: 185
   },
   {
     id: 'emp-102',
@@ -270,6 +410,7 @@ export const INITIAL_EMPLOYERS_LIST = [
     name: 'Arjun Mehta',
     email: 'arjun.mehta@razorpay.mock',
     role: 'employer',
+    organizationType: 'corporate',
     title: 'Staff Tech Recruiter',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300',
     location: 'Bengaluru, Karnataka',
@@ -285,6 +426,7 @@ export const INITIAL_EMPLOYERS_LIST = [
     name: 'Deepika Rao',
     email: 'deepika@kissanai.mock',
     role: 'employer',
+    organizationType: 'corporate',
     title: 'Founding Engineer & CTO',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300',
     location: 'Hyderabad, Telangana',
@@ -330,19 +472,20 @@ export const SAMPLE_CANDIDATES = [
   {
     id: 'cand-001',
     name: 'Rohan Sharma',
+    institutionId: 'inst-vedam-01',
     title: 'Full-Stack & Backend Systems Engineer',
     avatar: 'https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=300',
     location: 'Mumbai (Open to Bengaluru & Pune)',
     experienceLevel: 'Entry-Level / 2026 Batch',
     graduationYear: 2026,
-    education: 'IIT Bombay',
+    education: 'Vedam School of Technology',
     degree: 'B.Tech Computer Science and Engineering',
     cgpa: '9.2 / 10',
     powScore: 940,
     rank: 'Top 2%',
     verificationStatus: 'Verified Candidate (Demo)',
     availability: 'Available for 2026 Grad / SDE Intern',
-    summary: 'Final year CSE student at IIT Bombay. Prior SDE intern at Razorpay and Zerodha. Guardian on LeetCode (Rating: 2,120) with deep focus on concurrent Java, Redis, and Next.js.',
+    summary: 'Final year CSE student at Vedam School of Technology. Prior SDE intern at Razorpay and Zerodha. Guardian on LeetCode (Rating: 2,120) with deep focus on concurrent Java, Redis, and Next.js.',
     programmingLanguages: ['Java', 'TypeScript', 'C++', 'Python', 'SQL'],
     skills: ['Java', 'TypeScript', 'Next.js', 'PostgreSQL', 'Redis', 'Spring Boot'],
     verifiedProjectsCount: 5,
@@ -365,6 +508,7 @@ export const SAMPLE_CANDIDATES = [
   {
     id: 'cand-002',
     name: 'Ananya Verma',
+    institutionId: 'inst-nitt-01',
     title: 'Frontend Systems & Web Performance Engineer',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=300',
     location: 'Bengaluru, Karnataka',
@@ -400,19 +544,20 @@ export const SAMPLE_CANDIDATES = [
   {
     id: 'cand-003',
     name: 'Aditya Singh',
+    institutionId: 'inst-vedam-01',
     title: 'AI / Machine Learning & Systems Engineer',
     avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300',
     location: 'Hyderabad, Telangana',
     experienceLevel: 'Entry-Level / 2026 Batch',
     graduationYear: 2026,
-    education: 'IIIT Hyderabad',
+    education: 'Vedam School of Technology',
     degree: 'B.Tech CSE (Artificial Intelligence and Machine Learning)',
     cgpa: '9.4 / 10',
     powScore: 955,
     rank: 'Top 1%',
     verificationStatus: 'Verified Candidate (Demo)',
     availability: 'Open to Offers (2026 Batch)',
-    summary: 'IIIT Hyderabad student specializing in fast LLM inference, vector similarity search, and PyTorch acceleration. Former research intern at Postman AI labs.',
+    summary: 'Vedam School of Technology student specializing in fast LLM inference, vector similarity search, and PyTorch acceleration. Former research intern at Postman AI labs.',
     programmingLanguages: ['Python', 'C++', 'SQL', 'Bash'],
     skills: ['Python', 'PyTorch', 'vLLM', 'FastAPI', 'pgvector', 'Docker'],
     verifiedProjectsCount: 4,
@@ -435,6 +580,7 @@ export const SAMPLE_CANDIDATES = [
   {
     id: 'cand-004',
     name: 'Priya Nair',
+    institutionId: 'inst-nitw-01',
     title: 'Cloud Native & DevOps Engineer',
     avatar: 'https://images.unsplash.com/photo-1567532939604-b6b5b0db2604?auto=format&fit=crop&q=80&w=300',
     location: 'Kochi, Kerala (Open to Bengaluru)',
@@ -470,6 +616,7 @@ export const SAMPLE_CANDIDATES = [
   {
     id: 'cand-005',
     name: 'Arjun Mehta',
+    institutionId: 'inst-adypu-01',
     title: 'Full Stack Developer & Java Specialist',
     avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=300',
     location: 'Pune, Maharashtra',
@@ -505,29 +652,30 @@ export const SAMPLE_CANDIDATES = [
   {
     id: 'cand-006',
     name: 'Sneha Reddy',
+    institutionId: 'inst-vedam-01',
     title: 'Algorithms & Backend Engineering Student',
     avatar: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&q=80&w=300',
     location: 'Hyderabad, Telangana',
     experienceLevel: 'Entry-Level / 2028 Batch',
     graduationYear: 2028,
-    education: 'VIT Vellore',
+    education: 'Vedam School of Technology',
     degree: 'B.Tech Computer Science and Engineering',
     cgpa: '9.1 / 10',
-    powScore: 870,
-    rank: 'Top 12%',
+    powScore: 910,
+    rank: 'Top 5%',
     verificationStatus: 'Verified Candidate (Demo)',
     availability: 'Open to Summer Internship',
-    summary: '2nd year CSE undergraduate at VIT Vellore. Keen competitive programmer with 320+ LeetCode problems solved. Strong foundation in dynamic programming and graph theory.',
+    summary: '2nd year CSE undergraduate at Vedam School of Technology. Keen competitive programmer with 420+ LeetCode problems solved. Strong foundation in dynamic programming and graph theory.',
     programmingLanguages: ['C++', 'Java', 'Python'],
     skills: ['Data Structures & Algorithms', 'C++', 'Java', 'SQL', 'Object-Oriented Design'],
-    verifiedProjectsCount: 2,
+    verifiedProjectsCount: 3,
     codingStats: {
-      leetcodeSolved: 320,
-      leetcodeRating: 1720,
-      codeforcesRating: 1490,
+      leetcodeSolved: 420,
+      leetcodeRating: 1820,
+      codeforcesRating: 1560,
       codeforcesRank: 'Specialist',
-      geeksforgeeksScore: 1340,
-      githubStars: 120
+      geeksforgeeksScore: 1540,
+      githubStars: 180
     },
     topProject: {
       title: 'GraphRoute: Optimal Multi-Stop Logistics Router',
@@ -540,6 +688,7 @@ export const SAMPLE_CANDIDATES = [
   {
     id: 'cand-007',
     name: 'Karthik Iyer',
+    institutionId: 'inst-srm-01',
     title: 'Data Engineering & Analytics Developer',
     avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&q=80&w=300',
     location: 'Chennai, Tamil Nadu',
@@ -575,19 +724,20 @@ export const SAMPLE_CANDIDATES = [
   {
     id: 'cand-008',
     name: 'Rahul Gupta',
+    institutionId: 'inst-vedam-01',
     title: 'Software Development Engineer & DSA Enthusiast',
     avatar: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&q=80&w=300',
     location: 'Delhi NCR (Noida / Gurugram)',
     experienceLevel: 'Entry-Level / 2027 Batch',
     graduationYear: 2027,
-    education: 'Thapar Institute of Engineering and Technology',
-    degree: 'B.E. Computer Engineering',
+    education: 'Vedam School of Technology',
+    degree: 'B.Tech Computer Science and Engineering',
     cgpa: '8.8 / 10',
     powScore: 905,
     rank: 'Top 6%',
     verificationStatus: 'Verified Candidate (Demo)',
     availability: 'Available for 2026 Internships',
-    summary: '3rd year computer engineering student at Thapar. Deeply skilled in Java OOP, microservices, and LeetCode problem solving. Built a collaborative text sync engine using WebSockets.',
+    summary: '3rd year computer engineering student at Vedam School of Technology. Deeply skilled in Java OOP, microservices, and LeetCode problem solving. Built a collaborative text sync engine using WebSockets.',
     programmingLanguages: ['Java', 'C++', 'JavaScript', 'SQL'],
     skills: ['Java', 'Spring Boot', 'WebSockets', 'MySQL', 'Data Structures & Algorithms'],
     verifiedProjectsCount: 3,
@@ -605,6 +755,78 @@ export const SAMPLE_CANDIDATES = [
       githubUrl: 'https://github.com/rahul-gupta/syncdoc',
       badge: 'Concurrency Verified (Demo)',
       verifiedHighlights: 'Maintained sub-40ms operational transformation sync across 12 simultaneous sockets.'
+    }
+  },
+  {
+    id: 'cand-009',
+    name: 'Divya Nair',
+    institutionId: 'inst-vedam-01',
+    title: 'Cloud Distributed Systems Engineer',
+    avatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=300',
+    location: 'Bengaluru, Karnataka',
+    experienceLevel: 'Entry-Level / 2026 Batch',
+    graduationYear: 2026,
+    education: 'Vedam School of Technology',
+    degree: 'B.Tech Computer Science and Engineering',
+    cgpa: '9.3 / 10',
+    powScore: 935,
+    rank: 'Top 3%',
+    verificationStatus: 'Verified Candidate (Demo)',
+    availability: 'Available for 2026 Placement',
+    summary: 'Senior systems engineer at Vedam School of Technology. Built high throughput Raft consensus layer in Go and Kubernetes custom controller. Smart India Hackathon finalist.',
+    programmingLanguages: ['Go', 'Java', 'Python', 'TypeScript'],
+    skills: ['Go', 'Kubernetes', 'Docker', 'Distributed Consensus', 'PostgreSQL'],
+    verifiedProjectsCount: 4,
+    codingStats: {
+      leetcodeSolved: 580,
+      leetcodeRating: 2010,
+      codeforcesRating: 1740,
+      codeforcesRank: 'Expert',
+      geeksforgeeksScore: 1790,
+      githubStars: 310
+    },
+    topProject: {
+      title: 'RaftMesh: Light-Footprint Clustered State Machine',
+      demoUrl: 'https://raftmesh.mock',
+      githubUrl: 'https://github.com/divya-nair/raftmesh',
+      badge: 'Distributed Systems Audited (Demo)',
+      verifiedHighlights: 'Achieved sub-2ms leader failover across 5 geo-distributed mock nodes.'
+    }
+  },
+  {
+    id: 'cand-010',
+    name: 'Tanmay Kulkarni',
+    institutionId: 'inst-adypu-01',
+    title: 'Backend Systems & Database Architect',
+    avatar: 'https://images.unsplash.com/photo-1522075469751-3a6694fb2f61?auto=format&fit=crop&q=80&w=300',
+    location: 'Pune, Maharashtra',
+    experienceLevel: 'Entry-Level / 2026 Batch',
+    graduationYear: 2026,
+    education: 'Ajeenkya DY Patil University',
+    degree: 'B.E. Computer Engineering',
+    cgpa: '8.7 / 10',
+    powScore: 895,
+    rank: 'Top 7%',
+    verificationStatus: 'Verified Candidate (Demo)',
+    availability: 'Looking for Final Year SDE Role',
+    summary: 'ADYPU Pune computer engineering student. Focused on PostgreSQL query plan optimization, indexing internals, and transaction isolation levels.',
+    programmingLanguages: ['Python', 'SQL', 'C++', 'Java'],
+    skills: ['PostgreSQL', 'SQL Optimization', 'Python', 'FastAPI', 'Redis'],
+    verifiedProjectsCount: 3,
+    codingStats: {
+      leetcodeSolved: 440,
+      leetcodeRating: 1790,
+      codeforcesRating: 1530,
+      codeforcesRank: 'Specialist',
+      geeksforgeeksScore: 1510,
+      githubStars: 175
+    },
+    topProject: {
+      title: 'QueryTune: Automated Slow-Query Index Suggester',
+      demoUrl: 'https://querytune.mock',
+      githubUrl: 'https://github.com/tanmay-k/querytune',
+      badge: 'Database Benchmarked (Demo)',
+      verifiedHighlights: 'Reduced synthetic table scan latency by 72% using covering partial indexes.'
     }
   }
 ];
