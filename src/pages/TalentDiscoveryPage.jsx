@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 
 export default function TalentDiscoveryPage() {
-  const { candidates, savedCandidateIds, toggleSaveCandidate, navigateTo, showToast } = useApp();
+  const { candidates, savedCandidateIds, toggleSaveCandidate, navigateTo, setInterviewCandidate, showToast } = useApp();
 
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSkillFilter, setSelectedSkillFilter] = useState('All');
@@ -211,7 +211,7 @@ export default function TalentDiscoveryPage() {
                   </button>
 
                   <button
-                    onClick={() => showToast(`Direct interview proposal sent to ${cand.name}!`)}
+                    onClick={() => setInterviewCandidate(cand)}
                     className="px-4 py-2.5 rounded-xl bg-brand-600 hover:bg-brand-500 text-white text-xs font-semibold shadow-glow-sm transition-all flex items-center gap-1.5"
                   >
                     <Mail className="w-3.5 h-3.5" />

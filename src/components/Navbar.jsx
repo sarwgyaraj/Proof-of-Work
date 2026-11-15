@@ -275,7 +275,13 @@ export default function Navbar() {
               <>
                 <button
                   onClick={() => {
-                    navigateTo(currentUser.role === 'candidate' ? 'candidate-dashboard' : 'employer-dashboard');
+                    if (currentUser.role === 'admin') {
+                      navigateTo('admin-dashboard');
+                    } else if (currentUser.role === 'candidate') {
+                      navigateTo('candidate-dashboard');
+                    } else {
+                      navigateTo('employer-dashboard');
+                    }
                     setMobileMenuOpen(false);
                   }}
                   className="w-full text-left px-3 py-2 text-sm font-semibold text-brand-300 bg-brand-500/10 rounded-lg"
