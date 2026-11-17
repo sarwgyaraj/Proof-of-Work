@@ -476,15 +476,6 @@ export default function CandidateProfile() {
             </div>
           </div>
 
-          {/* Categorized Technical Skills Matrix (User Provided Format) */}
-          <div className="glass-panel p-6 sm:p-7 rounded-3xl border border-slate-800">
-            <SkillCategoriesGrid
-              categories={candidate.skillCategories}
-              title="Programming & Technical Skill Proficiencies"
-              subtitle="Demonstrated ability & verified code benchmark proficiency by technical domain"
-            />
-          </div>
-
           {/* Programming Languages & Technical Skills Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             
