@@ -134,11 +134,19 @@ export default function CandidateProfile() {
       {/* Top Breadcrumb & Share Action */}
       <div className="flex items-center justify-between">
         <button
-          onClick={() => navigateTo('talent')}
+          onClick={() => {
+            if (currentUser?.role === 'employer') {
+              navigateTo('employer-dashboard');
+            } else if (currentUser?.role === 'admin') {
+              navigateTo('admin-dashboard');
+            } else {
+              navigateTo('candidate-dashboard');
+            }
+          }}
           className="inline-flex items-center gap-1.5 text-xs text-slate-400 hover:text-white transition-colors"
         >
           <ArrowLeft className="w-3.5 h-3.5" />
-          <span>Back to Talent Directory</span>
+          <span>{currentUser?.role === 'employer' ? 'Back to Talent Pipeline' : 'Back to Dashboard'}</span>
         </button>
 
         <button

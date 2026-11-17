@@ -33,8 +33,7 @@ export default function Navbar() {
     ];
   } else if (userRole === 'employer') {
     navLinks = [
-      { id: 'employer-dashboard', label: 'Talent Pipeline', icon: Users },
-      { id: 'talent', label: 'Talent Directory', icon: Users }
+      { id: 'employer-dashboard', label: 'Talent Pipeline', icon: Users }
     ];
   } else {
     navLinks = [
