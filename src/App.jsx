@@ -29,6 +29,13 @@ function AppContent() {
       case 'login':
         return <LoginPage />;
       case 'candidate-dashboard':
+        // Guard: If employer or admin somehow hits candidate-dashboard, redirect to employer/admin dashboard
+        if (currentUser?.role === 'employer') {
+          return <EmployerDashboard />;
+        }
+        if (currentUser?.role === 'admin') {
+          return <AdminDashboard />;
+        }
         return <CandidateDashboard />;
       case 'employer-dashboard':
         return <EmployerDashboard />;

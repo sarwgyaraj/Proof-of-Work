@@ -314,7 +314,7 @@ export function AppProvider({ children }) {
       setActiveRole('employer');
       setViewedProfileId('cand-001');
       navigateTo('employer-dashboard');
-      showToast('Signed in as Satya Nadella (Microsoft - Corporate Organisation)');
+      showToast('Signed in as Kavita Chidambaram (Microsoft - Corporate Organisation)');
     } else if (role === 'employer') {
       setCurrentUser(INITIAL_EMPLOYER);
       setActiveRole('employer');
