@@ -29,18 +29,15 @@ export default function Navbar() {
   if (userRole === 'admin') {
     navLinks = [
       { id: 'admin-dashboard', label: 'Admin Hub', icon: LayoutDashboard },
-      { id: 'talent', label: 'Candidates', icon: Users },
-      { id: 'hackathons', label: 'Hackathons', icon: Compass }
+      { id: 'talent', label: 'Candidates', icon: Users }
     ];
   } else if (userRole === 'employer') {
     navLinks = [
       { id: 'employer-dashboard', label: 'Talent Pipeline', icon: Users },
-      { id: 'talent', label: 'Talent Directory', icon: Users },
-      { id: 'hackathons', label: 'Hackathons', icon: Compass }
+      { id: 'talent', label: 'Talent Directory', icon: Users }
     ];
   } else {
     navLinks = [
-      { id: 'hackathons', label: 'Hackathons', icon: Compass },
       { id: 'submit-project', label: 'Submit Proof', icon: UploadCloud }
     ];
   }
