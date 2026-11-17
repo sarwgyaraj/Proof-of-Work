@@ -38,6 +38,7 @@ export default function Navbar() {
     ];
   } else {
     navLinks = [
+      { id: 'challenges', label: 'Explore Challenges', icon: Compass },
       { id: 'submit-project', label: 'Submit Proof', icon: UploadCloud }
     ];
   }

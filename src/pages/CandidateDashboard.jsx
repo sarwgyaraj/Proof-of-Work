@@ -186,7 +186,7 @@ export default function CandidateDashboard() {
             </div>
           </div>
 
-          {/* 4 Functional Action Buttons */}
+          {/* Action Buttons */}
           <div className="flex flex-wrap items-center gap-2.5 w-full lg:w-auto">
             <button
               onClick={() => setIsEditModalOpen(true)}
@@ -194,14 +194,6 @@ export default function CandidateDashboard() {
             >
               <Edit3 className="w-3.5 h-3.5 text-brand-400" />
               <span>Edit Profile</span>
-            </button>
-
-            <button
-              onClick={() => navigateTo('submit-project')}
-              className="px-4 py-2.5 rounded-xl bg-gradient-to-r from-brand-600 to-indigo-600 hover:from-brand-500 hover:to-indigo-500 text-white font-semibold text-xs shadow-glow flex items-center gap-2 transition-all"
-            >
-              <UploadCloud className="w-3.5 h-3.5" />
-              <span>Add Project</span>
             </button>
 
             <button
