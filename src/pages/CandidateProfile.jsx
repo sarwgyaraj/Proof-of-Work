@@ -33,7 +33,6 @@ import {
   Linkedin
 } from 'lucide-react';
 import ConnectedCodingProfiles from '../components/ConnectedCodingProfiles';
-import LinkedInIntegrationCard from '../components/LinkedInIntegrationCard';
 import SkillCategoriesGrid from '../components/SkillCategoriesGrid';
 
 export default function CandidateProfile() {
@@ -391,18 +390,6 @@ export default function CandidateProfile() {
           <span>Practical Assessments & Benchmarks</span>
         </button>
 
-        <button
-          onClick={() => setActiveTab('identity-verification')}
-          className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors flex items-center gap-2 shrink-0 ${
-            activeTab === 'identity-verification'
-              ? 'bg-emerald-600 text-white shadow-glow-sm'
-              : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
-          }`}
-        >
-          <GraduationCap className="w-4 h-4" />
-          <span>Academic & Cohort Verification</span>
-        </button>
-
       </div>
 
       {/* Tab 1: Connected Coding Profiles (LeetCode, Codeforces, GeeksforGeeks, GitHub) */}
@@ -693,23 +680,6 @@ export default function CandidateProfile() {
             <div className="text-emerald-400">✓ checks.........................: 100.00% ✓ 2,400,960 / ✗ 0</div>
             <div className="text-slate-400">✓ Static AST branch depth........: 3.4 per function (Pass threshold &lt; 10)</div>
           </div>
-        </div>
-      )}
-
-      {/* Tab 5: Academic & Vedam College Verification */}
-      {activeTab === 'identity-verification' && (
-        <div className="space-y-6">
-          <LinkedInIntegrationCard
-            candidate={candidate}
-            isOwner={currentUser?.id === candidate.id || candidate.id === 'cand-001'}
-            onUpdateLinkedIn={(updatedLinkedIn) => {
-              updateProfile?.({ linkedIn: updatedLinkedIn });
-            }}
-            onUpdateCollegeVerification={(updatedCollege) => {
-              updateProfile?.({ collegeVerification: updatedCollege });
-            }}
-            showToast={showToast}
-          />
         </div>
       )}
 

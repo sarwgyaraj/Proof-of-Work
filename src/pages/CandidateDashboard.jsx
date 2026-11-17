@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
 import Avatar from '../components/Avatar';
-import LinkedInIntegrationCard from '../components/LinkedInIntegrationCard';
 import HackathonCard from '../components/HackathonCard';
 import HackathonDetailModal from '../components/HackathonDetailModal';
 import { evaluateHackathonEligibility } from '../utils/hackathonEligibility';
@@ -560,19 +559,6 @@ export default function CandidateDashboard() {
         </div>
 
       </div>
-
-      {/* 8. LinkedIn & Institutional Trust Integration Module */}
-      <LinkedInIntegrationCard
-        candidate={user}
-        isOwner={true}
-        onUpdateLinkedIn={(updatedLinkedIn) => {
-          updateProfile({ linkedIn: updatedLinkedIn });
-        }}
-        onUpdateCollegeVerification={(updatedCollege) => {
-          updateProfile({ collegeVerification: updatedCollege });
-        }}
-        showToast={showToast}
-      />
 
       {/* Edit Profile Modal Dialog */}
       <EditProfileModal
