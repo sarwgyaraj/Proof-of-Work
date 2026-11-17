@@ -197,14 +197,6 @@ export default function CandidateDashboard() {
             </button>
 
             <button
-              onClick={() => navigateTo('challenges')}
-              className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-750 text-slate-200 text-xs font-medium border border-slate-700 transition-all flex items-center gap-2"
-            >
-              <Compass className="w-3.5 h-3.5 text-amber-400" />
-              <span>Explore Challenges</span>
-            </button>
-
-            <button
               onClick={() => navigateTo('profile', user.id || 'cand-001')}
               className="px-4 py-2.5 rounded-xl bg-navy-950 hover:bg-slate-850 text-slate-200 text-xs font-medium border border-slate-800 transition-all flex items-center gap-2"
             >
