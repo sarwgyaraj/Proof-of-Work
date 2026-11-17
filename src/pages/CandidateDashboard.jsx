@@ -33,6 +33,7 @@ import {
   Check
 } from 'lucide-react';
 import EditProfileModal from '../components/EditProfileModal';
+import SkillCategoriesGrid from '../components/SkillCategoriesGrid';
 
 export default function CandidateDashboard() {
   const {
@@ -308,56 +309,13 @@ export default function CandidateDashboard() {
 
       </div>
 
-      {/* 4. Verified Skills Section with Badges */}
-      <div className="glass-panel p-6 sm:p-7 rounded-3xl border border-slate-800 space-y-5">
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-800/80 pb-4">
-          <div>
-            <h2 className="text-lg font-bold text-white flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-brand-400" />
-              Verified Skills & Mastery Badges
-            </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Audited from passing test suites, commit histories, and automated load benchmarks.
-            </p>
-          </div>
-          <span className="text-xs font-mono text-emerald-400 bg-emerald-500/10 px-2.5 py-1 rounded-md border border-emerald-500/20 self-start sm:self-auto">
-            ● 5/5 Skills Independently Audited
-          </span>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {user.verifiedSkills?.map((skill) => (
-            <div
-              key={skill.name}
-              className="p-4 rounded-2xl bg-navy-950/80 border border-slate-800/90 space-y-3 glass-panel-hover"
-            >
-              <div className="flex items-center justify-between">
-                <span className="font-semibold text-white text-sm">{skill.name}</span>
-                <span className="px-2 py-0.5 rounded text-[10px] font-mono font-bold bg-brand-500/15 text-brand-300 border border-brand-500/30">
-                  {skill.badge || 'Verified'}
-                </span>
-              </div>
-
-              <div className="space-y-1.5">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="text-slate-400 font-medium">{skill.level}</span>
-                  <span className="font-mono text-brand-300 font-bold">{skill.score}%</span>
-                </div>
-                <div className="w-full bg-slate-900 h-2 rounded-full overflow-hidden border border-slate-800">
-                  <div
-                    className="h-full bg-gradient-to-r from-brand-500 to-violet-500 rounded-full"
-                    style={{ width: `${skill.score}%` }}
-                  />
-                </div>
-              </div>
-
-              <div className="flex items-center justify-between text-[11px] text-slate-500 pt-1 border-t border-slate-900">
-                <span>Verified in {skill.verifiedCount} projects</span>
-                <span className="text-emerald-400 font-medium">Passed AST Check</span>
-              </div>
-            </div>
-          ))}
-        </div>
+      {/* 4. Categorized Technical Skills Matrix */}
+      <div className="glass-panel p-6 sm:p-7 rounded-3xl border border-slate-800">
+        <SkillCategoriesGrid
+          categories={user.skillCategories}
+          title="Programming & Technical Skill Proficiencies"
+          subtitle="Demonstrated ability & verified code benchmark proficiency by technical domain"
+        />
       </div>
 
       {/* 4.5 Curated "Hackathons for You" Section */}

@@ -134,9 +134,6 @@ export default function SkillCategoriesGrid({
                       <span className="text-slate-300 font-medium text-[13px]">
                         {skill.name}
                       </span>
-                      <span className="font-mono text-slate-400 text-xs font-semibold">
-                        {skill.percentage}%
-                      </span>
                     </div>
 
                     {/* Progress Track */}
