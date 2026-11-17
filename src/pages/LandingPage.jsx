@@ -37,220 +37,69 @@ export default function LandingPage() {
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
+          <div className="max-w-4xl mx-auto text-center space-y-8">
             
-            {/* Left Column: Headline, Subtitle, Actions, Trust badges */}
-            <div className="lg:col-span-7 space-y-8 text-left">
-              
-              {/* Top pill badge */}
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-brand-500/30 text-xs text-brand-300 font-medium shadow-glow-sm hover:border-brand-500/50 transition-colors">
-                <span className="flex h-2 w-2 rounded-full bg-brand-400 animate-pulse" />
-                <span>Verified Abilities Over Resumes</span>
-                <span className="text-slate-500">|</span>
-                <span className="text-slate-300 flex items-center gap-1 hover:text-white cursor-pointer" onClick={() => navigateTo('challenges')}>
-                  Explore live challenges <ArrowRight className="w-3 h-3" />
-                </span>
-              </div>
-
-              {/* Headline */}
-              <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-[1.1]">
-                Don't Just Claim Your Skills.{' '}
-                <span className="bg-gradient-to-r from-brand-300 via-indigo-300 to-violet-400 bg-clip-text text-transparent">
-                  Prove Them.
-                </span>
-              </h1>
-
-              {/* Subtitle */}
-              <p className="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed max-w-xl">
-                A better way for companies to discover talent through real projects, practical challenges and verified skills.
-              </p>
-
-              {/* Two CTA Buttons */}
-              <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
-                <button
-                  onClick={() => navigateTo('talent')}
-                  className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 via-indigo-600 to-violet-600 hover:from-brand-500 hover:to-violet-500 text-white font-semibold text-sm shadow-glow flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5"
-                >
-                  <Search className="w-4 h-4 text-brand-200" />
-                  <span>Explore Talent</span>
-                  <ArrowRight className="w-4 h-4 text-brand-200" />
-                </button>
-
-                <button
-                  onClick={() => loginAs('candidate')}
-                  className="px-7 py-3.5 rounded-xl bg-navy-900/90 hover:bg-slate-800 text-slate-100 hover:text-white font-semibold text-sm border border-slate-700/80 shadow-md flex items-center justify-center gap-2 transition-all"
-                >
-                  <Code2 className="w-4 h-4 text-brand-400" />
-                  <span>Showcase Your Skills</span>
-                </button>
-              </div>
-
-              {/* Key Trust Stats Grid */}
-              <div className="pt-6 border-t border-slate-800/70 grid grid-cols-2 sm:grid-cols-4 gap-5">
-                <div>
-                  <div className="text-2xl font-bold text-white tracking-tight">99.4%</div>
-                  <div className="text-xs text-slate-400 mt-0.5">Automated Test Accuracy</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-brand-400 tracking-tight">0 min</div>
-                  <div className="text-xs text-slate-400 mt-0.5">LeetCode Inversion Trivia</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-violet-400 tracking-tight">100%</div>
-                  <div className="text-xs text-slate-400 mt-0.5">Public Code Audits</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-emerald-400 tracking-tight">4.8x</div>
-                  <div className="text-xs text-slate-400 mt-0.5">Faster Technical Hiring</div>
-                </div>
-              </div>
-
+            {/* Top pill badge */}
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/90 border border-brand-500/30 text-xs text-brand-300 font-medium shadow-glow-sm hover:border-brand-500/50 transition-colors mx-auto">
+              <span className="flex h-2 w-2 rounded-full bg-brand-400 animate-pulse" />
+              <span>Verified Abilities Over Resumes</span>
+              <span className="text-slate-500">|</span>
+              <span className="text-slate-300 flex items-center gap-1 hover:text-white cursor-pointer" onClick={() => navigateTo('challenges')}>
+                Explore live challenges <ArrowRight className="w-3 h-3" />
+              </span>
             </div>
 
-            {/* Right Column: Visually Attractive Candidate Profile Preview Card */}
-            <div className="lg:col-span-5 relative">
-              
-              {/* Glow backdrop beneath candidate card */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-brand-500/20 via-violet-500/20 to-indigo-500/20 rounded-3xl blur-xl opacity-75" />
+            {/* Headline */}
+            <h1 className="text-4xl sm:text-6xl font-extrabold text-white tracking-tight leading-[1.1]">
+              Don't Just Claim Your Skills.{' '}
+              <span className="bg-gradient-to-r from-brand-300 via-indigo-300 to-violet-400 bg-clip-text text-transparent">
+                Prove Them.
+              </span>
+            </h1>
 
-              <div className="relative rounded-3xl glass-panel border border-slate-700/80 p-6 shadow-2xl space-y-6">
-                
-                {/* Window Bar / Top Live Status */}
-                <div className="flex items-center justify-between border-b border-slate-800/80 pb-4">
-                  <div className="flex items-center gap-2">
-                    <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                    <span className="text-[11px] font-mono text-emerald-400 uppercase tracking-wider font-semibold">
-                      Verified Candidate Profile
-                    </span>
-                  </div>
-                  <span className="text-[11px] font-mono text-slate-400 bg-navy-950 px-2 py-0.5 rounded border border-slate-800">
-                    ID: #POW-9402
-                  </span>
-                </div>
+            {/* Subtitle */}
+            <p className="text-lg sm:text-xl text-slate-300 font-normal leading-relaxed max-w-2xl mx-auto">
+              A better way for companies to discover talent through real projects, practical challenges and verified skills.
+            </p>
 
-                {/* Candidate Identity Header */}
-                <div className="flex items-start justify-between gap-4">
-                  <div className="flex items-center gap-3.5">
-                    <div className="relative">
-                      <Avatar
-                        src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=300"
-                        name="Rohan Sharma"
-                        className="w-14 h-14 rounded-2xl border-2 border-brand-500 shadow-glow-sm"
-                      />
-                      <div className="absolute -bottom-1 -right-1 p-1 bg-brand-600 rounded-full text-white" title="Verified Proof of Work">
-                        <ShieldCheck className="w-3.5 h-3.5" />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex items-center gap-1.5">
-                        <h3 className="font-bold text-white text-base">Rohan Sharma</h3>
-                        <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
-                          Active
-                        </span>
-                      </div>
-                      <p className="text-xs text-slate-300 font-medium">IIT Bombay CSE '26 • Full Stack Systems</p>
-                      <p className="text-[11px] text-slate-400">Mumbai / Bengaluru • Open to SDE Intern</p>
-                    </div>
-                  </div>
-                </div>
+            {/* Two CTA Buttons */}
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+              <button
+                onClick={() => navigateTo('talent')}
+                className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 via-indigo-600 to-violet-600 hover:from-brand-500 hover:to-violet-500 text-white font-semibold text-sm shadow-glow flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5"
+              >
+                <Search className="w-4 h-4 text-brand-200" />
+                <span>Explore Talent</span>
+                <ArrowRight className="w-4 h-4 text-brand-200" />
+              </button>
 
-                {/* Score & Project Count Strip */}
-                <div className="grid grid-cols-3 gap-2.5 bg-navy-950/90 p-3.5 rounded-2xl border border-slate-800">
-                  <div className="text-center">
-                    <div className="text-[10px] uppercase font-mono tracking-wider text-slate-400">PoW Score</div>
-                    <div className="text-lg font-bold font-mono text-brand-300 mt-0.5">940<span className="text-xs text-slate-500 font-normal">/1k</span></div>
-                    <div className="text-[10px] text-emerald-400 font-medium">Top 2% Globally</div>
-                  </div>
+              <button
+                onClick={() => loginAs('candidate')}
+                className="px-7 py-3.5 rounded-xl bg-navy-900/90 hover:bg-slate-800 text-slate-100 hover:text-white font-semibold text-sm border border-slate-700/80 shadow-md flex items-center justify-center gap-2 transition-all"
+              >
+                <Code2 className="w-4 h-4 text-brand-400" />
+                <span>Showcase Your Skills</span>
+              </button>
+            </div>
 
-                  <div className="text-center border-x border-slate-800">
-                    <div className="text-[10px] uppercase font-mono tracking-wider text-slate-400">Projects</div>
-                    <div className="text-lg font-bold font-mono text-white mt-0.5">5 Verified</div>
-                    <div className="text-[10px] text-slate-400">100% CI Passes</div>
-                  </div>
-
-                  <div className="text-center">
-                    <div className="text-[10px] uppercase font-mono tracking-wider text-slate-400">Challenges</div>
-                    <div className="text-lg font-bold font-mono text-violet-300 mt-0.5">12 Solved</div>
-                    <div className="text-[10px] text-violet-400 font-medium">3 Bounties</div>
-                  </div>
-                </div>
-
-                {/* Verified Skills & Progression Bars */}
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-xs">
-                    <span className="text-[11px] uppercase tracking-wider font-semibold text-slate-300">
-                      Demonstrated Skill Scores
-                    </span>
-                    <span className="text-[10px] font-mono text-brand-400">Automated AST Audited</span>
-                  </div>
-
-                  <div className="space-y-2.5 text-xs">
-                    <div>
-                      <div className="flex items-center justify-between text-[11px] mb-1">
-                        <span className="text-slate-200 font-medium">TypeScript & Systems</span>
-                        <span className="font-mono text-brand-300 font-semibold">96% • Expert</span>
-                      </div>
-                      <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-800">
-                        <div className="bg-gradient-to-r from-brand-500 to-indigo-400 h-full w-[96%] rounded-full" />
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-center justify-between text-[11px] mb-1">
-                        <span className="text-slate-200 font-medium">React / Next.js Performance</span>
-                        <span className="font-mono text-brand-300 font-semibold">98% • Expert</span>
-                      </div>
-                      <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-800">
-                        <div className="bg-gradient-to-r from-brand-500 to-violet-500 h-full w-[98%] rounded-full" />
-                      </div>
-                    </div>
-
-                    <div>
-                      <div className="flex items-center justify-between text-[11px] mb-1">
-                        <span className="text-slate-200 font-medium">Distributed Systems & Redis</span>
-                        <span className="font-mono text-brand-300 font-semibold">91% • Advanced</span>
-                      </div>
-                      <div className="w-full bg-slate-900 h-1.5 rounded-full overflow-hidden border border-slate-800">
-                        <div className="bg-gradient-to-r from-brand-500 to-emerald-400 h-full w-[91%] rounded-full" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Verification Badges */}
-                <div className="space-y-2 pt-1 border-t border-slate-800/80">
-                  <div className="text-[11px] uppercase tracking-wider font-semibold text-slate-400">
-                    Verification Badges
-                  </div>
-                  <div className="flex flex-wrap gap-1.5">
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-brand-500/10 border border-brand-500/20 text-brand-300 text-[11px] font-medium">
-                      <ShieldCheck className="w-3.5 h-3.5 text-brand-400" />
-                      Production Grade
-                    </span>
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-violet-500/10 border border-violet-500/20 text-violet-300 text-[11px] font-medium">
-                      <Cpu className="w-3.5 h-3.5 text-violet-400" />
-                      P99 &lt; 2ms
-                    </span>
-                    <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-300 text-[11px] font-medium">
-                      <CheckCircle className="w-3.5 h-3.5 text-emerald-400" />
-                      Zero GC Spikes
-                    </span>
-                  </div>
-                </div>
-
-                {/* Card Action footer */}
-                <div className="pt-2">
-                  <button
-                    onClick={() => navigateTo('profile', 'cand-001')}
-                    className="w-full py-2.5 rounded-xl bg-slate-800/90 hover:bg-slate-750 text-slate-200 hover:text-white font-medium text-xs border border-slate-700/80 flex items-center justify-center gap-2 transition-colors group"
-                  >
-                    <span>Inspect Full Verified Portfolio</span>
-                    <ArrowRight className="w-3.5 h-3.5 text-brand-400 group-hover:translate-x-0.5 transition-transform" />
-                  </button>
-                </div>
-
+            {/* Key Trust Stats Grid */}
+            <div className="pt-8 border-t border-slate-800/70 grid grid-cols-2 sm:grid-cols-4 gap-5 max-w-3xl mx-auto">
+              <div>
+                <div className="text-2xl font-bold text-white tracking-tight">99.4%</div>
+                <div className="text-xs text-slate-400 mt-0.5">Automated Test Accuracy</div>
               </div>
-
+              <div>
+                <div className="text-2xl font-bold text-brand-400 tracking-tight">0 min</div>
+                <div className="text-xs text-slate-400 mt-0.5">LeetCode Inversion Trivia</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-violet-400 tracking-tight">100%</div>
+                <div className="text-xs text-slate-400 mt-0.5">Public Code Audits</div>
+              </div>
+              <div>
+                <div className="text-2xl font-bold text-emerald-400 tracking-tight">4.8x</div>
+                <div className="text-xs text-slate-400 mt-0.5">Faster Technical Hiring</div>
+              </div>
             </div>
 
           </div>
