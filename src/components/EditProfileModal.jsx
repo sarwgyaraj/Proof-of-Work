@@ -84,18 +84,6 @@ export default function EditProfileModal({ user, isOpen, onClose, onSave }) {
           </button>
           <button
             type="button"
-            onClick={() => setActiveTab('linkedin')}
-            className={`flex-1 py-2.5 font-semibold text-center border-b-2 transition-colors flex items-center justify-center gap-1.5 ${
-              activeTab === 'linkedin'
-                ? 'border-[#0A66C2] text-[#0A66C2]'
-                : 'border-transparent text-slate-400 hover:text-slate-200'
-            }`}
-          >
-            <Linkedin className="w-3.5 h-3.5 fill-current" />
-            <span>LinkedIn Sync</span>
-          </button>
-          <button
-            type="button"
             onClick={() => setActiveTab('college')}
             className={`flex-1 py-2.5 font-semibold text-center border-b-2 transition-colors flex items-center justify-center gap-1.5 ${
               activeTab === 'college'
@@ -226,87 +214,6 @@ export default function EditProfileModal({ user, isOpen, onClose, onSave }) {
                 </div>
               </div>
             </>
-          )}
-
-          {activeTab === 'linkedin' && (
-            <div className="space-y-4">
-              <div className="p-3.5 rounded-2xl bg-[#0A66C2]/10 border border-[#0A66C2]/30 flex items-start gap-3">
-                <Linkedin className="w-5 h-5 text-[#0A66C2] shrink-0 mt-0.5 fill-current" />
-                <div className="text-xs space-y-1">
-                  <div className="font-bold text-white flex items-center gap-2">
-                    <span>LinkedIn Identity Binding</span>
-                    <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-[#0A66C2]/20 text-[#0A66C2]">
-                      {formData.linkedIn?.status || 'Not Connected'}
-                    </span>
-                  </div>
-                  <p className="text-slate-300 text-[11px] leading-relaxed">
-                    Official OpenID Connect authentication will securely bind your verified identity. Web scraping and password requests are strictly prohibited.
-                  </p>
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-slate-300 font-semibold mb-1 uppercase tracking-wider text-[11px]">
-                  Manual LinkedIn Profile URL
-                </label>
-                <div className="relative">
-                  <Linkedin className="w-4 h-4 text-slate-500 absolute left-3 top-3 fill-current" />
-                  <input
-                    type="url"
-                    placeholder="https://www.linkedin.com/in/username"
-                    value={formData.linkedIn?.profileUrl || ''}
-                    onChange={(e) => {
-                      const url = e.target.value;
-                      setFormData(prev => ({
-                        ...prev,
-                        linkedIn: {
-                          ...prev.linkedIn,
-                          profileUrl: url
-                        }
-                      }));
-                    }}
-                    className="w-full pl-9 pr-3.5 py-2.5 rounded-xl bg-navy-950 border border-slate-800 text-white placeholder-slate-500 focus:outline-none focus:border-[#0A66C2] text-sm"
-                  />
-                </div>
-                <p className="text-[10px] text-slate-500 mt-1">
-                  Candidates can manually enter their verified profile URL. Format: https://www.linkedin.com/in/...
-                </p>
-              </div>
-
-              {/* OAuth Action Preview */}
-              <div className="p-3.5 rounded-xl bg-navy-950 border border-slate-800 space-y-2">
-                <div className="flex items-center justify-between text-xs">
-                  <span className="font-semibold text-slate-300">Single Sign-On (OpenID Connect)</span>
-                  <span className="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-mono">
-                    Coming Soon
-                  </span>
-                </div>
-                <p className="text-[11px] text-slate-400">
-                  Client ID, secrets, and auth callbacks will be kept securely on backend servers in compliance with LinkedIn Developer policies.
-                </p>
-                <button
-                  type="button"
-                  onClick={() => alert('LinkedIn OAuth 2.0 OpenID Connect integration is in progress. Official backend token broker is currently being provisioned.')}
-                  className="w-full py-2 px-3 rounded-lg bg-[#0A66C2]/20 hover:bg-[#0A66C2]/30 text-[#0A66C2] font-semibold text-xs flex items-center justify-center gap-1.5 transition-colors border border-[#0A66C2]/40"
-                >
-                  <Linkedin className="w-3.5 h-3.5 fill-current" />
-                  <span>Test OAuth Endpoint Trigger (Simulation)</span>
-                </button>
-              </div>
-
-              {formData.linkedIn?.status === 'Connected' && (
-                <button
-                  type="button"
-                  onClick={() => {
-                    const reset = buildDisconnectedLinkedInState();
-                    setFormData(prev => ({ ...prev, linkedIn: reset }));
-                  }}
-                  className="text-xs text-red-400 hover:text-red-300 underline"
-                >
-                  Disconnect LinkedIn and request deletion of imported metadata
-                </button>
-              )}
-            </div>
           )}
 
           {activeTab === 'college' && (

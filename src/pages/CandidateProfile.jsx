@@ -269,21 +269,8 @@ export default function CandidateProfile() {
           <div className="max-w-4xl text-sm text-slate-300 leading-relaxed space-y-2">
             <p>{candidate.summary || candidate.bio}</p>
 
-            {/* Profile Trust & Identity Badges (LinkedIn & Vedam Status) */}
+            {/* Profile Trust & Identity Badges (Vedam Status) */}
             <div className="flex flex-wrap items-center gap-2.5 pt-2">
-              {candidate.linkedIn?.profileUrl && (
-                <a
-                  href={candidate.linkedIn.profileUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-[#0A66C2]/15 text-[#0A66C2] border border-[#0A66C2]/30 text-xs font-semibold hover:bg-[#0A66C2]/25 transition-colors"
-                >
-                  <Linkedin className="w-3.5 h-3.5 fill-current" />
-                  <span>LinkedIn Profile Linked</span>
-                  <ExternalLink className="w-3 h-3 ml-0.5 opacity-70" />
-                </a>
-              )}
-
               {candidate.collegeVerification?.status && (
                 <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-xl bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 text-xs font-semibold">
                   <GraduationCap className="w-3.5 h-3.5 text-emerald-400" />
@@ -408,12 +395,12 @@ export default function CandidateProfile() {
           onClick={() => setActiveTab('identity-verification')}
           className={`px-4 py-2 text-xs font-semibold rounded-lg transition-colors flex items-center gap-2 shrink-0 ${
             activeTab === 'identity-verification'
-              ? 'bg-[#0A66C2] text-white shadow-glow-sm'
+              ? 'bg-emerald-600 text-white shadow-glow-sm'
               : 'text-slate-400 hover:text-white hover:bg-slate-800/60'
           }`}
         >
-          <Linkedin className="w-4 h-4 fill-current" />
-          <span>LinkedIn & Academic Verification</span>
+          <GraduationCap className="w-4 h-4" />
+          <span>Academic & Cohort Verification</span>
         </button>
 
       </div>
@@ -709,7 +696,7 @@ export default function CandidateProfile() {
         </div>
       )}
 
-      {/* Tab 5: LinkedIn Identity & Vedam College Verification */}
+      {/* Tab 5: Academic & Vedam College Verification */}
       {activeTab === 'identity-verification' && (
         <div className="space-y-6">
           <LinkedInIntegrationCard
