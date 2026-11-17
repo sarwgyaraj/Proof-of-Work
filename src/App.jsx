@@ -38,6 +38,13 @@ function AppContent() {
         }
         return <CandidateDashboard />;
       case 'employer-dashboard':
+        // Guard: If candidate somehow hits employer-dashboard, redirect to candidate dashboard
+        if (currentUser?.role === 'candidate') {
+          return <CandidateDashboard />;
+        }
+        if (currentUser?.role === 'admin') {
+          return <AdminDashboard />;
+        }
         return <EmployerDashboard />;
       case 'admin-dashboard':
         return <AdminDashboard />;
