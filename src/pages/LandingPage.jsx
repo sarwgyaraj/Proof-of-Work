@@ -22,7 +22,10 @@ import {
 } from 'lucide-react';
 
 export default function LandingPage() {
-  const { navigateTo, loginAs } = useApp();
+  const { navigateTo, loginAs, currentUser } = useApp();
+
+  const isEmployer = currentUser?.role === 'employer';
+  const isCandidate = currentUser?.role === 'candidate';
 
   return (
     <div className="w-full">
@@ -62,24 +65,30 @@ export default function LandingPage() {
               A better way for companies to discover talent through real projects, practical challenges and verified skills.
             </p>
 
-            {/* Two CTA Buttons */}
+            {/* Dynamic CTA Buttons based on persona */}
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
-              <button
-                onClick={() => navigateTo('talent')}
-                className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 via-indigo-600 to-violet-600 hover:from-brand-500 hover:to-violet-500 text-white font-semibold text-sm shadow-glow flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5"
-              >
-                <Search className="w-4 h-4 text-brand-200" />
-                <span>Explore Talent</span>
-                <ArrowRight className="w-4 h-4 text-brand-200" />
-              </button>
+              {/* "Explore Talent" only shown if NOT candidate */}
+              {!isCandidate && (
+                <button
+                  onClick={() => navigateTo('talent')}
+                  className="px-7 py-3.5 rounded-xl bg-gradient-to-r from-brand-600 via-indigo-600 to-violet-600 hover:from-brand-500 hover:to-violet-500 text-white font-semibold text-sm shadow-glow flex items-center justify-center gap-2 transition-all transform hover:-translate-y-0.5"
+                >
+                  <Search className="w-4 h-4 text-brand-200" />
+                  <span>Explore Talent</span>
+                  <ArrowRight className="w-4 h-4 text-brand-200" />
+                </button>
+              )}
 
-              <button
-                onClick={() => loginAs('candidate')}
-                className="px-7 py-3.5 rounded-xl bg-navy-900/90 hover:bg-slate-800 text-slate-100 hover:text-white font-semibold text-sm border border-slate-700/80 shadow-md flex items-center justify-center gap-2 transition-all"
-              >
-                <Code2 className="w-4 h-4 text-brand-400" />
-                <span>Showcase Your Skills</span>
-              </button>
+              {/* "Showcase Your Skills" only shown if NOT employer (Microsoft/corporate) */}
+              {!isEmployer && (
+                <button
+                  onClick={() => loginAs('candidate')}
+                  className="px-7 py-3.5 rounded-xl bg-navy-900/90 hover:bg-slate-800 text-slate-100 hover:text-white font-semibold text-sm border border-slate-700/80 shadow-md flex items-center justify-center gap-2 transition-all"
+                >
+                  <Code2 className="w-4 h-4 text-brand-400" />
+                  <span>Showcase Your Skills</span>
+                </button>
+              )}
             </div>
 
             {/* Key Trust Stats Grid */}
