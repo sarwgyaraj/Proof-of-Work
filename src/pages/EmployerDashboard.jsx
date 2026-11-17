@@ -182,18 +182,6 @@ export default function EmployerDashboard() {
           {/* Organization Dashboard Navigation Tabs */}
           <div className="flex flex-wrap items-center gap-2 w-full lg:w-auto">
             <button
-              onClick={() => setActiveTab('discovery')}
-              className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
-                activeTab === 'discovery'
-                  ? 'bg-brand-600 text-white shadow-glow'
-                  : 'bg-navy-900 text-slate-300 hover:text-white border border-slate-800'
-              }`}
-            >
-              <Search className="w-3.5 h-3.5" />
-              <span>Talent Discovery</span>
-            </button>
-
-            <button
               onClick={() => setActiveTab('shortlisted')}
               className={`px-3.5 py-2 rounded-xl text-xs font-semibold transition-all flex items-center gap-1.5 ${
                 activeTab === 'shortlisted'
