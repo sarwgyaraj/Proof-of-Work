@@ -20,7 +20,7 @@ import AdminDashboard from './pages/AdminDashboard';
 import EmployerProfile from './pages/EmployerProfile';
 
 function AppContent() {
-  const { currentView, currentUser, interviewCandidate, setInterviewCandidate } = useApp();
+  const { currentView, currentUser, viewedProfileId, interviewCandidate, setInterviewCandidate } = useApp();
 
   const renderCurrentView = () => {
     switch (currentView) {
@@ -35,8 +35,8 @@ function AppContent() {
       case 'admin-dashboard':
         return <AdminDashboard />;
       case 'profile':
-        // If current user is employer viewing their own profile, render EmployerProfile
-        if (currentUser?.role === 'employer') {
+        // If current user is employer viewing their own profile (and not a candidate's profile), render EmployerProfile
+        if (currentUser?.role === 'employer' && (!viewedProfileId || viewedProfileId === currentUser.id)) {
           return <EmployerProfile />;
         }
         return <CandidateProfile />;
