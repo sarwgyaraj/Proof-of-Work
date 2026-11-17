@@ -287,117 +287,121 @@ export default function LandingPage() {
       </section>
 
       {/* Employer Spotlight Section */}
-      <section className="py-20 border-t border-slate-800/80 bg-gradient-to-b from-navy-950 to-navy-900">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          
-          <div className="rounded-3xl bg-navy-900 border border-slate-700/80 p-8 sm:p-12 relative overflow-hidden">
-            <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-violet-600/10 rounded-full blur-3xl pointer-events-none" />
+      {/* Employer Spotlight Section - only visible for Microsoft/Corporate, hidden in candidate section */}
+      {!isCandidate && (
+        <section className="py-20 border-t border-slate-800/80 bg-gradient-to-b from-navy-950 to-navy-900">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div className="rounded-3xl bg-navy-900 border border-slate-700/80 p-8 sm:p-12 relative overflow-hidden">
+              <div className="absolute -bottom-20 -right-20 w-80 h-80 bg-violet-600/10 rounded-full blur-3xl pointer-events-none" />
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-              
-              <div>
-                <span className="text-xs uppercase font-bold tracking-widest text-brand-400">
-                  For Engineering Leaders
-                </span>
-                <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-2">
-                  Stop reading 400 identical resumes. Start evaluating running software.
-                </h2>
-                <p className="text-sm text-slate-300 mt-4 leading-relaxed">
-                  Every candidate on Proof of Work has their work verified by runtime tests. Save over 30 hours per open headcount and make confident hiring decisions backed by hard technical benchmarks.
-                </p>
-
-                <div className="mt-6 space-y-3">
-                  <div className="flex items-center gap-3 text-sm text-slate-200">
-                    <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0" />
-                    <span>Filter candidates by verified throughput, clean code indices, and tests</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-slate-200">
-                    <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0" />
-                    <span>Inspect reproducible GitHub repos and live hosted production demos</span>
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-slate-200">
-                    <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0" />
-                    <span>Post custom enterprise challenges tailored to your company's stack</span>
-                  </div>
-                </div>
-
-                <div className="mt-8 flex flex-wrap gap-4">
-                  <button
-                    onClick={() => loginAs('employer')}
-                    className="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold text-sm shadow-glow flex items-center gap-2 transition-all"
-                  >
-                    <span>Launch Employer Dashboard Demo</span>
-                    <ArrowRight className="w-4 h-4" />
-                  </button>
-                  <button
-                    onClick={() => navigateTo('talent')}
-                    className="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold border border-slate-700 transition-all"
-                  >
-                    Browse Available Talent
-                  </button>
-                </div>
-              </div>
-
-              {/* Employer preview card */}
-              <div className="bg-navy-950 rounded-2xl border border-slate-800 p-6 shadow-xl space-y-4">
-                <div className="flex items-center justify-between border-b border-slate-800 pb-4">
-                  <div className="flex items-center gap-3">
-                    <img
-                      src="https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&q=80&w=120"
-                      alt="Nexora Technologies"
-                      className="w-10 h-10 rounded-lg object-cover border border-slate-700"
-                    />
-                    <div>
-                      <h4 className="text-sm font-bold text-white">Nexora Technologies (Bengaluru)</h4>
-                      <div className="text-xs text-slate-400">Pooja Kulkarni, Director of Engineering</div>
-                    </div>
-                  </div>
-                  <span className="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded font-medium">
-                    3 Active Tech Searches
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                
+                <div>
+                  <span className="text-xs uppercase font-bold tracking-widest text-brand-400">
+                    For Engineering Leaders
                   </span>
+                  <h2 className="text-3xl sm:text-4xl font-extrabold text-white tracking-tight mt-2">
+                    Stop reading 400 identical resumes. Start evaluating running software.
+                  </h2>
+                  <p className="text-sm text-slate-300 mt-4 leading-relaxed">
+                    Every candidate on Proof of Work has their work verified by runtime tests. Save over 30 hours per open headcount and make confident hiring decisions backed by hard technical benchmarks.
+                  </p>
+
+                  <div className="mt-6 space-y-3">
+                    <div className="flex items-center gap-3 text-sm text-slate-200">
+                      <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0" />
+                      <span>Filter candidates by verified throughput, clean code indices, and tests</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-sm text-slate-200">
+                      <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0" />
+                      <span>Inspect reproducible GitHub repos and live hosted production demos</span>
+                    </div>
+                    <div className="flex items-center gap-3 text-sm text-slate-200">
+                      <CheckCircle className="w-5 h-5 text-emerald-400 shrink-0" />
+                      <span>Post custom enterprise challenges tailored to your company's stack</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-8 flex flex-wrap gap-4">
+                    <button
+                      onClick={() => loginAs('employer')}
+                      className="px-6 py-3 rounded-xl bg-brand-600 hover:bg-brand-500 text-white font-semibold text-sm shadow-glow flex items-center gap-2 transition-all"
+                    >
+                      <span>Launch Employer Dashboard Demo</span>
+                      <ArrowRight className="w-4 h-4" />
+                    </button>
+                    <button
+                      onClick={() => navigateTo('talent')}
+                      className="px-6 py-3 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-sm font-semibold border border-slate-700 transition-all"
+                    >
+                      Browse Available Talent
+                    </button>
+                  </div>
                 </div>
 
-                <div className="space-y-3">
-                  <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Top Matched Indian Candidates</div>
-                  <div className="p-3.5 rounded-xl bg-navy-900 border border-slate-800 flex items-center justify-between">
+                {/* Employer preview card */}
+                <div className="bg-navy-950 rounded-2xl border border-slate-800 p-6 shadow-xl space-y-4">
+                  <div className="flex items-center justify-between border-b border-slate-800 pb-4">
                     <div className="flex items-center gap-3">
-                      <Avatar
-                        src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=300"
-                        name="Rohan Sharma"
-                        className="w-10 h-10 rounded-full border border-brand-500"
+                      <img
+                        src="https://images.unsplash.com/photo-1614680376593-902f749f7ffc?auto=format&fit=crop&q=80&w=120"
+                        alt="Nexora Technologies"
+                        className="w-10 h-10 rounded-lg object-cover border border-slate-700"
                       />
                       <div>
-                        <div className="text-sm font-bold text-white">Rohan Sharma</div>
-                        <div className="text-xs text-brand-300">IIT Bombay • LeetCode Guardian (2,120)</div>
+                        <h4 className="text-sm font-bold text-white">Nexora Technologies (Bengaluru)</h4>
+                        <div className="text-xs text-slate-400">Pooja Kulkarni, Director of Engineering</div>
                       </div>
                     </div>
-                    <button
-                      onClick={() => navigateTo('profile', 'cand-001')}
-                      className="px-3 py-1.5 rounded-lg bg-brand-600/30 hover:bg-brand-600/50 text-brand-200 text-xs font-medium border border-brand-500/40 transition-colors"
-                    >
-                      View Audit
-                    </button>
+                    <span className="text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 px-2 py-0.5 rounded font-medium">
+                      3 Active Tech Searches
+                    </span>
                   </div>
 
-                  <div className="p-3.5 rounded-xl bg-navy-900 border border-slate-800 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <Avatar
-                        src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300"
-                        name="Aditya Singh"
-                        className="w-10 h-10 rounded-full border border-violet-500"
-                      />
-                      <div>
-                        <div className="text-sm font-bold text-white">Aditya Singh</div>
-                        <div className="text-xs text-violet-300">IIIT Hyderabad • Vector Embeddings & PyTorch</div>
+                  <div className="space-y-3">
+                    <div className="text-xs font-semibold text-slate-400 uppercase tracking-wider">Top Matched Indian Candidates</div>
+                    <div className="p-3.5 rounded-xl bg-navy-900 border border-slate-800 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Avatar
+                          src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&q=80&w=300"
+                          name="Rohan Sharma"
+                          className="w-10 h-10 rounded-full border border-brand-500"
+                        />
+                        <div>
+                          <div className="text-sm font-bold text-white">Rohan Sharma</div>
+                          <div className="text-xs text-brand-300">IIT Bombay • LeetCode Guardian (2,120)</div>
+                        </div>
                       </div>
+                      <button
+                        onClick={() => navigateTo('profile', 'cand-001')}
+                        className="px-3 py-1.5 rounded-lg bg-brand-600/30 hover:bg-brand-600/50 text-brand-200 text-xs font-medium border border-brand-500/40 transition-colors"
+                      >
+                        View Audit
+                      </button>
                     </div>
-                    <button
-                      onClick={() => navigateTo('profile', 'cand-003')}
-                      className="px-3 py-1.5 rounded-lg bg-violet-600/30 hover:bg-violet-600/50 text-violet-200 text-xs font-medium border border-violet-500/40 transition-colors"
-                    >
-                      View Audit
-                    </button>
+
+                    <div className="p-3.5 rounded-xl bg-navy-900 border border-slate-800 flex items-center justify-between">
+                      <div className="flex items-center gap-3">
+                        <Avatar
+                          src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=300"
+                          name="Aditya Singh"
+                          className="w-10 h-10 rounded-full border border-violet-500"
+                        />
+                        <div>
+                          <div className="text-sm font-bold text-white">Aditya Singh</div>
+                          <div className="text-xs text-violet-300">IIIT Hyderabad • Vector Embeddings & PyTorch</div>
+                        </div>
+                      </div>
+                      <button
+                        onClick={() => navigateTo('profile', 'cand-003')}
+                        className="px-3 py-1.5 rounded-lg bg-violet-600/30 hover:bg-violet-600/50 text-violet-200 text-xs font-medium border border-violet-500/40 transition-colors"
+                      >
+                        View Audit
+                      </button>
+                    </div>
                   </div>
+
                 </div>
 
               </div>
@@ -405,9 +409,8 @@ export default function LandingPage() {
             </div>
 
           </div>
-
-        </div>
-      </section>
+        </section>
+      )}
 
     </div>
   );
