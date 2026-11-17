@@ -126,26 +126,17 @@ export default function SkillCategoriesGrid({
                 </h4>
               </div>
 
-              {/* Skills List with Progress Bars */}
-              <div className="space-y-3 pt-1">
+              {/* Skills List with Bullet Points */}
+              <ul className="space-y-2.5 pt-1">
                 {cat.skills?.map((skill) => (
-                  <div key={skill.name} className="space-y-1.5">
-                    <div className="flex items-center justify-between text-xs">
-                      <span className="text-slate-300 font-medium text-[13px]">
-                        {skill.name}
-                      </span>
-                    </div>
-
-                    {/* Progress Track */}
-                    <div className="w-full bg-slate-900/90 h-1.5 rounded-full overflow-hidden border border-slate-800/60">
-                      <div
-                        className="h-full bg-teal-400 rounded-full transition-all duration-500"
-                        style={{ width: `${skill.percentage}%` }}
-                      />
-                    </div>
-                  </div>
+                  <li key={skill.name} className="flex items-center gap-2.5 text-xs">
+                    <span className="w-1.5 h-1.5 rounded-full bg-teal-400 shrink-0" />
+                    <span className="text-slate-200 font-medium text-[13px]">
+                      {skill.name}
+                    </span>
+                  </li>
                 ))}
-              </div>
+              </ul>
             </div>
           );
         })}
