@@ -496,7 +496,8 @@ function SpotlightModal({ isOpen, onClose }) {
               value: query,
               onChange: e => setQuery(e.target.value),
               placeholder: "Quick search candidates, projects, challenges, or jump to view...",
-              className: "w-full bg-transparent border-0 text-sm text-white placeholder-slate-500 focus:outline-none"
+              className: "w-full bg-transparent border-0 text-sm text-slate-100 placeholder-slate-500 focus:outline-none font-medium",
+              style: { color: "#ffffff", caretColor: "#38bdf8", opacity: 1 }
             }),
             n.jsx("kbd", {
               className: "px-2 py-0.5 text-[11px] font-mono text-slate-400 bg-slate-800 border border-slate-700 rounded-md shrink-0",
