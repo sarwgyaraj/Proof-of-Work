@@ -454,9 +454,18 @@ function nu(){const{currentUser:o,updateProfile:u,toggleVisibility:i,projects:d,
 function SpotlightModal({ isOpen, onClose }) {
   const { navigateTo, candidates = [], projects = [], challenges = [] } = Ke();
   const [query, setQuery] = E.useState("");
+  const inputRef = E.useRef(null);
 
   E.useEffect(() => {
-    if (!isOpen) setQuery("");
+    if (isOpen) {
+      setQuery("");
+      setTimeout(() => {
+        if (inputRef.current) {
+          inputRef.current.focus();
+          inputRef.current.select();
+        }
+      }, 50);
+    }
   }, [isOpen]);
 
   if (!isOpen) return null;
@@ -479,27 +488,50 @@ function SpotlightModal({ isOpen, onClose }) {
     onClose();
   };
 
+  const handleInputKeyDown = (e) => {
+    if (e.key === "Escape") {
+      e.preventDefault();
+      onClose();
+    } else if (e.key === "Enter") {
+      if (quickNav.length > 0) {
+        handleSelect(quickNav[0].view);
+      } else if (filteredCandidates.length > 0) {
+        handleSelect("profile", filteredCandidates[0].id);
+      } else if (filteredProjects.length > 0) {
+        handleSelect("profile", filteredProjects[0].candidateId || "cand-001");
+      } else if (filteredChallenges.length > 0) {
+        handleSelect("challenges");
+      }
+    }
+  };
+
   return n.jsx("div", {
-    className: "fixed inset-0 z-50 flex items-start justify-center pt-20 px-4 bg-navy-950/80 backdrop-blur-md animate-in fade-in duration-150",
+    className: "fixed inset-0 z-[80] flex items-start justify-center pt-10 sm:pt-16 px-4 bg-navy-950/85 backdrop-blur-md animate-in fade-in duration-150 overflow-y-auto",
     onClick: onClose,
     children: n.jsxs("div", {
-      className: "w-full max-w-2xl bg-navy-900 border border-slate-700/80 rounded-2xl shadow-2xl overflow-hidden flex flex-col",
+      className: "w-full max-w-2xl bg-navy-900 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden flex flex-col mb-12",
       onClick: e => e.stopPropagation(),
       children: [
         n.jsxs("div", {
-          className: "flex items-center gap-3 px-4 py-3.5 border-b border-slate-800 bg-navy-950/50",
+          className: "flex items-center gap-3 px-4 py-3.5 border-b border-slate-800 bg-[#090b0e]",
           children: [
-            n.jsx(jn, { className: "w-5 h-5 text-slate-400 shrink-0" }),
+            n.jsx(jn, { className: "w-5 h-5 text-brand-400 shrink-0" }),
             n.jsx("input", {
-              autoFocus: true,
+              ref: inputRef,
               type: "text",
               value: query,
               onChange: e => setQuery(e.target.value),
-              placeholder: "Quick search candidates, projects, challenges, or jump to view...",
-              className: "w-full bg-transparent border-0 text-sm text-slate-100 placeholder-slate-500 focus:outline-none font-medium",
-              style: { color: "#ffffff", caretColor: "#38bdf8", opacity: 1 }
+              onKeyDown: handleInputKeyDown,
+              placeholder: "Search candidates, projects, benchmarks, challenges...",
+              className: "w-full bg-transparent border-0 text-sm text-white placeholder-slate-500 focus:outline-none font-medium",
+              style: { color: "#ffffff", caretColor: "#38bdf8" }
             }),
-            n.jsx("kbd", {
+            query ? n.jsx("button", {
+              type: "button",
+              onClick: () => { setQuery(""); inputRef.current && inputRef.current.focus(); },
+              className: "p-1 text-slate-400 hover:text-white rounded-md",
+              children: n.jsx(Is, { className: "w-4 h-4" })
+            }) : n.jsx("kbd", {
               className: "px-2 py-0.5 text-[11px] font-mono text-slate-400 bg-slate-800 border border-slate-700 rounded-md shrink-0",
               children: "ESC"
             })
